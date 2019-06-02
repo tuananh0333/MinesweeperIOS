@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		591E2CDE22A37DF800B364F3 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CDD22A37DF800B364F3 /* RoundButton.swift */; };
+		591E2CE022A385FD00B364F3 /* HomeScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CDF22A385FD00B364F3 /* HomeScreenController.swift */; };
+		591E2CE222A39CE400B364F3 /* RowstackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CE122A39CE400B364F3 /* RowstackController.swift */; };
+		591E2CE422A3A24600B364F3 /* ColumnStackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CE322A3A24600B364F3 /* ColumnStackController.swift */; };
+		591E2CE722A3AE8C00B364F3 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CE522A3AE8C00B364F3 /* Tile.swift */; };
+		591E2CE822A3AE8C00B364F3 /* TileControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CE622A3AE8C00B364F3 /* TileControl.swift */; };
 		596E46B622A2C58A00DD08FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E46B522A2C58A00DD08FA /* AppDelegate.swift */; };
-		596E46B822A2C58A00DD08FA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E46B722A2C58A00DD08FA /* ViewController.swift */; };
+		596E46B822A2C58A00DD08FA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E46B722A2C58A00DD08FA /* GameViewController.swift */; };
 		596E46BB22A2C58A00DD08FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596E46B922A2C58A00DD08FA /* Main.storyboard */; };
 		596E46BD22A2C58A00DD08FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596E46BC22A2C58A00DD08FA /* Assets.xcassets */; };
 		596E46C022A2C58A00DD08FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596E46BE22A2C58A00DD08FA /* LaunchScreen.storyboard */; };
@@ -26,9 +32,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		591E2CDD22A37DF800B364F3 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
+		591E2CDF22A385FD00B364F3 /* HomeScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenController.swift; sourceTree = "<group>"; };
+		591E2CE122A39CE400B364F3 /* RowstackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowstackController.swift; sourceTree = "<group>"; };
+		591E2CE322A3A24600B364F3 /* ColumnStackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnStackController.swift; sourceTree = "<group>"; };
+		591E2CE522A3AE8C00B364F3 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		591E2CE622A3AE8C00B364F3 /* TileControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileControl.swift; sourceTree = "<group>"; };
 		596E46B222A2C58A00DD08FA /* game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596E46B522A2C58A00DD08FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		596E46B722A2C58A00DD08FA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		596E46B722A2C58A00DD08FA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		596E46BA22A2C58A00DD08FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		596E46BC22A2C58A00DD08FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		596E46BF22A2C58A00DD08FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,9 +89,15 @@
 		596E46B422A2C58A00DD08FA /* game */ = {
 			isa = PBXGroup;
 			children = (
+				591E2CE522A3AE8C00B364F3 /* Tile.swift */,
+				591E2CE622A3AE8C00B364F3 /* TileControl.swift */,
+				591E2CE322A3A24600B364F3 /* ColumnStackController.swift */,
+				591E2CE122A39CE400B364F3 /* RowstackController.swift */,
 				596E46B522A2C58A00DD08FA /* AppDelegate.swift */,
-				596E46B722A2C58A00DD08FA /* ViewController.swift */,
+				596E46B722A2C58A00DD08FA /* GameViewController.swift */,
 				596E46B922A2C58A00DD08FA /* Main.storyboard */,
+				591E2CDF22A385FD00B364F3 /* HomeScreenController.swift */,
+				591E2CDD22A37DF800B364F3 /* RoundButton.swift */,
 				596E46BC22A2C58A00DD08FA /* Assets.xcassets */,
 				596E46BE22A2C58A00DD08FA /* LaunchScreen.storyboard */,
 				596E46C122A2C58A00DD08FA /* Info.plist */,
@@ -199,8 +217,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				596E46B822A2C58A00DD08FA /* ViewController.swift in Sources */,
+				591E2CDE22A37DF800B364F3 /* RoundButton.swift in Sources */,
+				591E2CE222A39CE400B364F3 /* RowstackController.swift in Sources */,
+				596E46B822A2C58A00DD08FA /* GameViewController.swift in Sources */,
+				591E2CE822A3AE8C00B364F3 /* TileControl.swift in Sources */,
+				591E2CE722A3AE8C00B364F3 /* Tile.swift in Sources */,
+				591E2CE022A385FD00B364F3 /* HomeScreenController.swift in Sources */,
 				596E46B622A2C58A00DD08FA /* AppDelegate.swift in Sources */,
+				591E2CE422A3A24600B364F3 /* ColumnStackController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
