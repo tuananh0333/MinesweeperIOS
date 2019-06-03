@@ -28,7 +28,12 @@ class TileControl: UIButton {
         let bundle = Bundle(for: type(of: self))
 
         if let image = UIImage(named: tileModel.imageDictionary[tileModel.status]!, in: bundle, compatibleWith: self.traitCollection) {
-            setBackgroundImage(image, for: .normal)
+            if(tileModel.status == .flagged || tileModel.status == .flagging) {
+                setImage(image, for: .normal)
+                setBackgroundImage(UIImage(named: "hiden", in: bundle, compatibleWith: self.traitCollection), for: .normal)
+            } else {
+                setBackgroundImage(image, for: .normal)
+            }
         }
     }
     

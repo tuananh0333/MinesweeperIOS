@@ -17,7 +17,7 @@ class Tile {
         case exploded
     }
     
-    var imageDictionary: [Status: String] = [.hide: "hidden", .opened: "opened", .flagged: "flagged", .marked: "marked", .flagging: "flagging", .exploded: "exploded"]
+    var imageDictionary: [Status: String] = [.hide: "hiden", .opened: "opened", .flagged: "flagged", .marked: "marked", .flagging: "flagging", .exploded: "boom"]
     
     var y: Int
     var x: Int

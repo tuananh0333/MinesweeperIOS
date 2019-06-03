@@ -42,6 +42,7 @@ import UIKit
         tilesRow.removeAll()
         
         self.distribution = .fillEqually
+        self.spacing = 1
     }
     
     

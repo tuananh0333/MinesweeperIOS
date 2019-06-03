@@ -163,7 +163,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.74265362810000002" green="1" blue="0.41485318440000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ZKY-M4-EB9" customClass="ColumnStackController" customModule="game" customModuleProvider="target">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZKY-M4-EB9" customClass="ColumnStackController" customModule="game" customModuleProvider="target">
                                 <rect key="frame" x="19" y="83.5" width="337.5" height="573.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ZKY-M4-EB9" secondAttribute="height" multiplier="1:1.7" id="HpS-Vr-oha"/>

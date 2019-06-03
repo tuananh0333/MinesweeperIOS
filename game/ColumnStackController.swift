@@ -8,7 +8,19 @@
 
 import UIKit
 
-@IBDesignable class ColumnStackController: UIStackView {
+class ColumnStackController: UIStackView {
+    
+    let FIFTY_PERCENT = 2
+    let TWENTY_FIVE_PERCENT = 4
+    let TWENTY_PERCENT = 5
+    let THIRTY_THREE_PERCENT = 3
+    enum Level {
+        case EASY
+        case NOMAL
+        case DIFFERENT
+        case INCREDIBLE
+    }
+    
     enum TouchMode {
         case flag
         case normal
@@ -19,7 +31,8 @@ import UIKit
     @IBInspectable let rows: Int = 16
     @IBInspectable let cols: Int = 8
     var currentMine = 0
-    var maxMine = 10
+    var mineNum = 0
+    
     var openedTiles = 0
     var touchMode: TouchMode = .normal
     var tilesField: [[Tile]] = []
@@ -36,7 +49,8 @@ import UIKit
         setupTileField()
         setupButton()
     }
-    
+    //Tile la du lieu cua button
+    //day la khoi tao button
     func setupButton() {
         for row in rowList {
             removeArrangedSubview(row)
@@ -71,7 +85,7 @@ import UIKit
             rowList += [stkRow]
         }
     }
-    
+    //day a khoi tao Tile
     func setupTileField() {
         currentMine = 0
         isOver = false
@@ -83,13 +97,9 @@ import UIKit
             }
         }
         
-        while (currentMine < maxMine) {
-            for row in 0 ..< rows {
-                for col in 0 ..< cols {
-                    if currentMine < maxMine {
-                        setMineForTile(tile: tilesField[row][col])
-                    }
-                }
+        for row in 0 ..< rows {
+            for col in 0 ..< cols {
+                    setMineForTile(tile: tilesField[row][col])
             }
         }
     }
@@ -99,10 +109,12 @@ import UIKit
             return
         }
         
-        if (arc4random() % UInt32(maxMine)) == 0 {
+        if (arc4random_uniform(UInt32(TWENTY_PERCENT)) + 1) == 1 {
+            //tao ra bom moi
             tile.isMine = true
             tile.status = .flagged
             currentMine += 1
+            mineNum += 1
             print(tile.x, ",", tile.y, "")
             increaseNearbyTileCounter(tile: tile)
         }
@@ -125,7 +137,7 @@ import UIKit
                        (-1, 1), (0, 1), (1, 1)]
         
         for (rowOffset, colOffset) in offsets {
-            if let nearbyTile = getTileAt(of.x + rowOffset, of.y	 + colOffset) {
+            if let nearbyTile = getTileAt(of.x + rowOffset, of.y + colOffset) {
                 nearbyTiles.append(nearbyTile)
                 print(nearbyTile.x, ",", nearbyTile.y)
             }
