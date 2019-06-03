@@ -16,18 +16,14 @@ class Tile {
         case flagging
         case exploded
     }
-    
-<<<<<<< HEAD
-    var imageDictionary: [Status: String] = [.hide: "hiden", .opened: "opened", .flagged: "flagged", .marked: "marked", .flagging: "flagging", .exploded: "boom"]
-=======
+
+
     private var imageDictionary: [State: String] = [.hide: "hidden",
                                              .opened: "opened",
                                              .flagged: "flagged",
                                              .marked: "marked",
                                              .flagging: "flagging",
                                              .exploded: "exploded"]
->>>>>>> 53bb455404ba289379333ee7647bf679921bbd7a
-    
     private var y: Int
     private var x: Int
     
