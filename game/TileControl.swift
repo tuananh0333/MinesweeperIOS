@@ -10,80 +10,36 @@ import UIKit
 
 class TileControl: UIButton {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     var tileSize: CGFloat = CGFloat(5)
-    var tileModel: Tile
+    var tileModel: Tile {
+        didSet {
+            setImage()
+        }
+    }
     
-    func createTile(tileModel: Tile, tileSize: CGFloat) {
-        self.tileModel = tileModel
+    func createTile(x:Int, y:Int, tileSize: CGFloat) {
+        self.tileModel = Tile(x: x, y: y)
         self.tileSize = tileSize
 
-        let x = CGFloat(self.tileModel.x) * tileSize
-        let y = CGFloat(self.tileModel.y) * tileSize
+        setImage()
+    }
+    
+    func setImage() {
+        let bundle = Bundle(for: type(of: self))
 
-        let tileFrame = CGRect(x: x, y: y, width: tileSize, height: tileSize)
-//        super.init(
+        if let image = UIImage(named: tileModel.imageDictionary[tileModel.status]!, in: bundle, compatibleWith: self.traitCollection) {
+            setBackgroundImage(image, for: .normal)
+        }
     }
     
     override init(frame: CGRect) {
         self.tileModel = Tile()
         
-        
-        
         super.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        tileModel = Tile()
         fatalError("init(coder:) has not been implemented")
-    }
-    
-//    init(tile: Tile) {
-//        super.init()
-//        self.tileModel = tile
-//    }
-    
-    func getButtonImage() {
-        var btnImage: UIImage?
-        
-        let bundle = Bundle(for: type(of: self))
-        
-        switch self.tileModel.status {
-        case .flag:
-            if let imgFlag = UIImage(named: "flagged",
-                                     in: bundle,
-                                     compatibleWith: self.traitCollection) {
-                btnImage = imgFlag
-            }
-        case.mark:
-            if let imgMark = UIImage(named: "????",
-                                     in: bundle,
-                                     compatibleWith: self.traitCollection) {
-                btnImage = imgMark
-            }
-        case.opened:
-            if let imgMine = UIImage(named: "????",
-                                     in: bundle,
-                                     compatibleWith: self.traitCollection) {
-                btnImage = imgMine
-            }
-        default:
-            if let imgHide = UIImage(named: "????",
-                                     in: bundle,
-                                     compatibleWith: self.traitCollection) {
-                btnImage = imgHide
-            }
-        }
-        
-        setBackgroundImage(btnImage, for: .normal)
     }
     
     func isMine() -> Bool {
@@ -107,7 +63,9 @@ class TileControl: UIButton {
     }
     
     func setStatus(status: Tile.Status) {
+        print(status)
         tileModel.status = status
+        setImage()
     }
     
     func getRow() -> Int {
@@ -116,5 +74,38 @@ class TileControl: UIButton {
     
     func getCol() -> Int {
         return tileModel.x
+    }
+    
+    func pressed(touchMode: ColumnStackController.TouchMode) -> Bool{
+        var isOk = true
+        if touchMode == .normal {
+            if getStatus() == .hide || getStatus() == .flagged {
+                if (isMine()) {
+                    setStatus(status: .exploded)
+                    isOk = false
+                }
+                else {
+                    setStatus(status: .opened)
+                }
+            }
+        }
+        else {
+            //MARK: Touchtype == Flag
+            switch getStatus() {
+            case .hide:
+                setStatus(status: .flagged)
+            case .flagged:
+                setStatus(status: .marked)
+            case .marked:
+                setStatus(status: .hide)
+            case .opened:
+                break
+            case .flagging:
+                break
+            case .exploded:
+                break
+            }
+        }
+        return isOk
     }
 }

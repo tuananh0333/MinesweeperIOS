@@ -11,11 +11,13 @@ class Tile {
     enum Status {
         case hide
         case opened
-        case flag
-        case mark
+        case flagged
+        case marked
         case flagging
-        
+        case exploded
     }
+    
+    var imageDictionary: [Status: String] = [.hide: "hidden", .opened: "opened", .flagged: "flagged", .marked: "marked", .flagging: "flagging", .exploded: "exploded"]
     
     var y: Int
     var x: Int
