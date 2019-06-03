@@ -8,7 +8,19 @@
 
 import UIKit
 
-@IBDesignable class ColumnStackController: UIStackView {
+class ColumnStackController: UIStackView {
+    
+    let FIFTY_PERCENT = 2
+    let TWENTY_FIVE_PERCENT = 4
+    let TWENTY_PERCENT = 5
+    let THIRTY_THREE_PERCENT = 3
+    enum Level {
+        case EASY
+        case NOMAL
+        case DIFFERENT
+        case INCREDIBLE
+    }
+    
     enum TouchMode {
         case flag
         case normal
@@ -20,7 +32,20 @@ import UIKit
     
     //MARK: Properties
     private var rowList = [RowStackController]()
+<<<<<<< HEAD
+    @IBInspectable let rows: Int = 16
+    @IBInspectable let cols: Int = 8
+    var currentMine = 0
+    var mineNum = 0
     
+    var openedTiles = 0
+    var touchMode: TouchMode = .normal
+    var tilesField: [[Tile]] = []
+    var isOver: Bool = false
+
+=======
+    
+>>>>>>> 53bb455404ba289379333ee7647bf679921bbd7a
     override init(frame: CGRect) {
         super.init(frame: frame)
         board.setupTileField()
@@ -68,7 +93,70 @@ import UIKit
             rowList += [stkRow]
         }
     }
+<<<<<<< HEAD
+    //day a khoi tao Tile
+    func setupTileField() {
+        currentMine = 0
+        isOver = false
+        tilesField = []
+        for row in 0 ..< rows {
+            tilesField.append([])
+            for col in 0 ..< cols {
+                tilesField[row].append(Tile(x: row, y: col))
+            }
+        }
+        
+        for row in 0 ..< rows {
+            for col in 0 ..< cols {
+                    setMineForTile(tile: tilesField[row][col])
+            }
+        }
+    }
     
+    func setMineForTile(tile: Tile) {
+        if tile.isMine {
+            return
+        }
+        
+        if (arc4random_uniform(UInt32(TWENTY_PERCENT)) + 1) == 1 {
+            //tao ra bom moi
+            tile.isMine = true
+            tile.status = .flagged
+            currentMine += 1
+            mineNum += 1
+            print(tile.x, ",", tile.y, "")
+            increaseNearbyTileCounter(tile: tile)
+        }
+    }
+    
+    func increaseNearbyTileCounter(tile: Tile) {
+        let nearbyTiles = getNearbyTiles(of: tile)
+        for nearbyTile in nearbyTiles {
+            if (!nearbyTile.isMine) {
+                nearbyTile.mineCounter += 1
+            }
+        }
+    }
+    
+    func getNearbyTiles(of: Tile) -> [Tile] {
+        var nearbyTiles: [Tile] = []
+        
+        let offsets = [(-1, -1), (0, -1) , (1, -1),
+                       (-1, 0), (1, 0),
+                       (-1, 1), (0, 1), (1, 1)]
+        
+        for (rowOffset, colOffset) in offsets {
+            if let nearbyTile = getTileAt(of.x + rowOffset, of.y + colOffset) {
+                nearbyTiles.append(nearbyTile)
+                print(nearbyTile.x, ",", nearbyTile.y)
+            }
+        }
+        
+        return nearbyTiles
+    }
+=======
+    
+>>>>>>> 53bb455404ba289379333ee7647bf679921bbd7a
     
     
     //MARK: Rating actions

@@ -32,8 +32,7 @@ import UIKit
         board.setupTileField()
         setupButton()
     }
-    //Tile la du lieu cua button
-    //day la khoi tao button
+    
     func setupButton() {
         for row in rowList {
             removeArrangedSubview(row)
