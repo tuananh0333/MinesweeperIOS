@@ -8,78 +8,107 @@
 
 import Foundation
 class BoardModel {
-    let rows: Int = 16
-    let cols: Int = 8
-    var currentMine = 0
-    var maxMine = 10
-    var openedTiles = 0
-    var tilesField: [[Tile]] = []
+    enum TouchMode {
+        case flag
+        case normal
+    }
+    //MARKS: Fields
+    private var touchMode: TouchMode = .normal
+    private var rows: Int = 16
+    private var cols: Int = 8
+    private var currentMine = 0
+    private var maxMine = 0
+    private var openedTiles = 0
+    private var tilesField: [[TileControl]] = []
     var isOver: Bool = false
     
+    //MARK: Constructor
+    init(_ rows: Int, _ cols: Int) {
+        self.rows = rows
+        self.cols = cols
+        
+        createBoard()
+    }
+    
     init() {
+        createBoard()
+    }
+    
+    func createBoard() {
         currentMine = 0
         isOver = false
         tilesField = []
-        for row in 0 ..< rows {
+        for x in 0 ..< cols {
             tilesField.append([])
-            for col in 0 ..< cols {
-                tilesField[row].append(Tile(x: row, y: col))
+            for y in 0 ..< rows {
+                let btnTile = TileControl()
+                btnTile.setTileModel(Tile(x: x, y: y))
+                tilesField[x].append(btnTile)
             }
         }
+        
+        setupTileField(maxMine: 0)
     }
     
+    //MARK: Prepare data
     func setupTileField(maxMine: Int = 0) {
         self.maxMine = maxMine
 
         repeat {
-            for row in 0 ..< rows {
-                for col in 0 ..< cols {
-                    setMineForTile(tile: tilesField[row][col])
+            for x in 0 ..< cols {
+                for y in 0 ..< rows {
+                    setMineForTile(tile: tilesField[x][y])
                 }
             }
         } while (currentMine < maxMine)
     }
 
-    func setMineForTile(tile: Tile) {
-        if tile.isMineTile() {
+    func setMineForTile(tile: TileControl) {
+        let tileModel = tile.getTileModel()
+        if tileModel.isMineTile() {
             return
         }
         
         var percent: Bool = false
         
         if self.maxMine != 0 {
-            percent = (arc4random() % UInt32(maxMine)) == 0
+            percent = ((arc4random() % UInt32(maxMine)) == 0)
         }
         else {
-            percent = arc4random_uniform(3) == 0
+            percent = (arc4random_uniform(5) == 0)
         }
         
-        if percent {
-            tile.setMine(true)
+//        let percent: Bool = self.maxMine != 0 ? (arc4random() % UInt32(maxMine)) == 0 ? : percent = arc4random_uniform(3) == 0
+        
+        if percent == true {
+            tileModel.setMine(true)
+            tileModel.setState(.flagged)
             currentMine += 1
-            print(tile.getX(), ",", tile.getY(), "")
+            print("Mine: ",tileModel.getX(), ",", tileModel.getY(), "")
             increaseNearbyTileCounter(tile: tile)
         }
+        
+        tile.setTileModel(tileModel)
     }
     
-    func increaseNearbyTileCounter(tile: Tile) {
+    func increaseNearbyTileCounter(tile: TileControl) {
         let nearbyTiles = getNearbyTiles(of: tile)
         for nearbyTile in nearbyTiles {
-            if (!nearbyTile.isMineTile()) {
-                nearbyTile.setMineCounter(value: nearbyTile.getMineCounter() + 1)
-            }
+            let tileModel = nearbyTile.getTileModel()
+            tileModel.increaseMineCounter(by: 1)
+            nearbyTile.setTileModel(tileModel)
         }
     }
     
-    func getNearbyTiles(of: Tile) -> [Tile] {
-        var nearbyTiles: [Tile] = []
+    func getNearbyTiles(of: TileControl) -> [TileControl] {
+        var nearbyTiles: [TileControl] = []
         
         let offsets = [(-1, -1), (0, -1) , (1, -1),
                        (-1, 0), (1, 0),
                        (-1, 1), (0, 1), (1, 1)]
         
         for (rowOffset, colOffset) in offsets {
-            if let nearbyTile = getTileAt(of.getX() + rowOffset, of.getY() + colOffset) {
+            if let nearbyTile = getTileAt(of.getTileModel().getX() + rowOffset, of.getTileModel().getY() + colOffset) {
                 nearbyTiles.append(nearbyTile)
             }
         }
@@ -87,25 +116,47 @@ class BoardModel {
         return nearbyTiles
     }
     
-    func getTileAt(_ row: Int, _ col: Int) -> Tile? {
-        if (row >= 0 && row < self.rows
-            && col >= 0 && col < self.cols) {
-            return tilesField[row][col]
+    func getTileAt(_ x: Int, _ y: Int) -> TileControl? {
+        if (x >= 0 && x < self.cols
+            && y >= 0 && y < self.rows) {
+            return tilesField[x][y]
         }
         else {
             return nil
         }
     }
 
-    func touched(_ tile: Tile, touchMode: ColumnStackController.TouchMode) {
-        if tile.getMineCounter() == 0 {
-            let nearbyTiles = getNearbyTiles(of: tile)
-            for nearbyTile in nearbyTiles {
-                if (!nearbyTile.isMineTile()) {
-                    touched(nearbyTile, touchMode: touchMode)
+    func touch(_ tile: TileControl){
+        let state = tile.getTileModel().touched(touchMode: touchMode)
+        tile.updateImage()
+        print(state)
+        
+        switch state {
+        case .opened:
+            if tile.getTileModel().getMineCounter() < 1 {
+                
+                let nearbyTiles = getNearbyTiles(of: tile)
+                
+                for nearbyTile in nearbyTiles {
+                    let tileModel = nearbyTile.getTileModel()
+                    if (!tileModel.isMineTile() && tileModel.getState() == .hide ) {
+                        touch(nearbyTile)
+                    }
                 }
             }
+        case .exploded:
+            isOver = true
+        default:
+            break;
         }
-        tile.pressed(touchMode: touchMode)
+    }
+    
+    func toggleFlag() {
+        if touchMode == .normal {
+            touchMode = .flag
+        }
+        else {
+            touchMode = .normal
+        }
     }
 }

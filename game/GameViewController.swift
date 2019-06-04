@@ -12,14 +12,17 @@ class ViewController: UIViewController {
     
     var isFlagging = false {
         didSet {
-            if isFlagging {
-                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagged"), for: .normal)
-            } else {
-                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagging"), for: .normal)
-            }
+//            if isFlagging {
+//                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagged"), for: .normal)
+//            } else {
+//                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagging"), for: .normal)
+//            }
+            
+            stkBoard.toggleFlag()
         }
     }
 	
+    @IBOutlet weak var stkBoard: ColumnStackController!
     @IBOutlet weak var lblBombNumber: UILabel!
     @IBOutlet weak var lblScore: UILabel!
     @IBOutlet weak var btnFlagOutlet: UIButton!
@@ -30,6 +33,7 @@ class ViewController: UIViewController {
     }
     @IBAction func btnBackToHome(_ sender: UIButton) {
     }
+
     @IBAction func btnFlag(_ sender: UIButton) {
         isFlagging = !isFlagging
     }

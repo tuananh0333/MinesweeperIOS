@@ -17,6 +17,10 @@ class Tile {
         case exploded
     }
 
+    enum Trigger {
+        case openTile
+        case flagTile
+    }
 
     private var imageDictionary: [State: String] = [.hide: "hidden",
                                              .opened: "opened",
@@ -24,6 +28,7 @@ class Tile {
                                              .marked: "marked",
                                              .flagging: "flagging",
                                              .exploded: "exploded"]
+    
     private var y: Int
     private var x: Int
     
@@ -69,6 +74,15 @@ class Tile {
         return mineCounter
     }
     
+    func increaseMineCounter(by: Int) {
+        if isMine {
+            return
+        }
+        else {
+            self.mineCounter += by < 0 ? 0 : by
+        }
+    }
+    
     func setMineCounter(value: Int) {
         if (value <= 0) {
             self.mineCounter = 0
@@ -97,40 +111,50 @@ class Tile {
         return self.isMine
     }
     
-    func pressed(touchMode: ColumnStackController.TouchMode) -> Bool{
-        var isOk = true
-        if touchMode == .normal {
-            if state == .hide {
-                if (isMine) {
-                    state = .exploded
-                    isOk = false
-                }
-                else {
-                    state = .opened
-                }
+    func touched(touchMode: BoardModel.TouchMode) -> State {
+        switch touchMode {
+        case .flag:
+            flagTile()
+        case .normal:
+            openTile()
+        }
+
+        return state
+    }
+    
+    private func openTile() {
+        if state == .hide {
+            if (isMine) {
+                state = .exploded
+            }
+            else {
+                state = .opened
             }
         }
-        else {
-            //MARK: Touchtype == Flag
-            switch state {
-            case .hide:
-                state = .flagged
-            case .flagged:
-                state = .marked
-            case .marked:
-                state = .hide
-            case .opened:
-                break
-            case .flagging:
-                break
-            case .exploded:
-                break
-            }
+    }
+    
+    private func flagTile() {
+        switch state {
+        case .hide:
+            state = .flagged
+        case .flagged:
+            state = .marked
+        case .marked:
+            state = .hide
+        case .opened:
+            break
+        case .flagging:
+            break
+        case .exploded:
+            break
         }
-        return isOk
     }
     
     func getImageName() -> String? {
-        return imageDictionary[state]
+        return imageDictionary[state]! + getChildImage()
+    }
+    
+    private func getChildImage() -> String {
+        return mineCounter == 0 ? "" : mineCounter.description
     }
 }
