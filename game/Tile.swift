@@ -100,7 +100,7 @@ class Tile {
         return self.isMine
     }
     
-    func touched(touchMode: BoardModel.TouchMode) -> State {
+    func touch(touchMode: BoardModel.TouchMode) -> State {
         switch touchMode {
         case .flag:
             flagTile()
@@ -140,7 +140,12 @@ class Tile {
     }
     
     func getImageName() -> String? {
-        return imageDictionary[state]! + getChildImage()
+        if let imageName = imageDictionary[state] {
+            return imageName + (state == .opened ? getChildImage() : "")
+        }
+        else {
+            return nil
+        }
     }
     
     private func getChildImage() -> String {

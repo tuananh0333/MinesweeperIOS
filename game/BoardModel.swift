@@ -19,6 +19,7 @@ class BoardModel {
     private var currentMine = 0
     private var maxMine = 0
     private var openedTiles = 0
+    private var flaggedTiles = 0
     private var tilesField: [[TileControl]] = []
     var isOver: Bool = false
     
@@ -81,14 +82,14 @@ class BoardModel {
             percent = ((arc4random() % UInt32(maxMine)) == 0)
         }
         else {
-            percent = (arc4random_uniform(5) == 0)
+            percent = (arc4random_uniform(10) == 0)
         }
         
 //        let percent: Bool = self.maxMine != 0 ? (arc4random() % UInt32(maxMine)) == 0 ? : percent = arc4random_uniform(3) == 0
         
         if percent == true {
             tileModel.setMine(true)
-            tileModel.setState(.flagged)
+//            tileModel.setState(.flagged)
             currentMine += 1
             print("Mine: ",tileModel.getX(), ",", tileModel.getY(), "")
         }
@@ -134,13 +135,23 @@ class BoardModel {
     }
 
     func touch(_ tile: TileControl){
-        let state = tile.getTileModel().touched(touchMode: touchMode)
+        if touchMode == .flag && flaggedTiles == currentMine {
+            print("You have reach maximum flagged")
+            return
+        }
+
+        if isWin() {
+            print("You win")
+            return
+        }
+        
+        let state = tile.getTileModel().touch(touchMode: touchMode)
         tile.updateImage()
         print(state)
         
         switch state {
         case .opened:
-            if tile.getTileModel().getMineCounter() < 1 {
+            if tile.getTileModel().getMineCounter() < 2 {
                 
                 let nearbyTiles = getNearbyTiles(of: tile)
                 
@@ -151,11 +162,45 @@ class BoardModel {
                     }
                 }
             }
+            openedTiles += 1
         case .exploded:
             isOver = true
+        case .flagged:
+            fallthrough
+        case .marked:
+            flaggedTiles += 1
         default:
             break;
         }
+    }
+    
+    func isWin() -> Bool{
+        print(currentMine)
+        
+        var flaggedMine: Int = 0
+        
+        if rows * cols - openedTiles == currentMine {
+            return true
+        }
+
+        if flaggedTiles == currentMine {
+            for x in 0 ..< cols {
+                for y in 0 ..< rows {
+                    let currentTile = tilesField[x][y]
+                    if currentTile.getTileModel().isMineTile() {
+                        if currentTile.getTileModel().getState() == .flagged {
+                            flaggedMine += 1
+                        }
+                    }
+                }
+            }
+            
+            if flaggedMine == currentMine {
+                return true
+            }
+        }
+        
+        return false
     }
     
     func toggleFlag() {
