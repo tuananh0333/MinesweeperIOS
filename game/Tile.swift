@@ -78,21 +78,10 @@ class Tile {
         if isMine {
             return
         }
-        else {
-            self.mineCounter += by < 0 ? 0 : by
+        if by < 0 {
+            return
         }
-    }
-    
-    func setMineCounter(value: Int) {
-        if (value <= 0) {
-            self.mineCounter = 0
-        } else if (value >= 9) {
-            self.mineCounter = 9
-        } else {
-            self.mineCounter = value
-        }
-        
-//        self.mineCounter = value <= 0 ? 0 : (value >= 9 ? 9 : value)
+        self.mineCounter += 1
     }
     
     func getState() -> State {

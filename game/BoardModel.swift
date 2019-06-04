@@ -61,6 +61,12 @@ class BoardModel {
                 }
             }
         } while (currentMine < maxMine)
+        
+        for x in 0 ..< cols {
+            for y in 0 ..< rows {
+                countMineAround(tile: tilesField[x][y])
+            }
+        }
     }
 
     func setMineForTile(tile: TileControl) {
@@ -85,18 +91,19 @@ class BoardModel {
             tileModel.setState(.flagged)
             currentMine += 1
             print("Mine: ",tileModel.getX(), ",", tileModel.getY(), "")
-            increaseNearbyTileCounter(tile: tile)
         }
         
         tile.setTileModel(tileModel)
     }
     
-    func increaseNearbyTileCounter(tile: TileControl) {
+    func countMineAround(tile: TileControl) {
         let nearbyTiles = getNearbyTiles(of: tile)
         for nearbyTile in nearbyTiles {
             let tileModel = nearbyTile.getTileModel()
-            tileModel.increaseMineCounter(by: 1)
-            nearbyTile.setTileModel(tileModel)
+            if (tileModel.isMineTile()) {
+                tile.getTileModel().increaseMineCounter(by: 1)
+            }
+            
         }
     }
     
