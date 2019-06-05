@@ -42,7 +42,7 @@ class BoardModel {
                                                                            .square: [(-1, -1), (0, -1), (1, -1),
                                                                                      (-1, 0), (1, 0),
                                                                                      (-1, 1), (0, 1), (1, 1)]]
-    
+    private var _point = 0
     //MARK: Properties
     var touchMode: TouchMode {
         set { _touchMode = newValue }
@@ -70,6 +70,10 @@ class BoardModel {
         else {
             _maxMines = 0
         }
+    }
+    
+    func getPoint() -> Int {
+        return _point
     }
     
     //MARK: Prepare data
@@ -205,6 +209,8 @@ class BoardModel {
                 }
             }
             _openedTiles += 1
+            _point += tile.getTileModel().getMineCounter() * 2
+            
         case .exploded:
             gameOver()
             isOver = true
@@ -238,11 +244,11 @@ class BoardModel {
     }
     
     func win() {
-        
+        _point += _maxMines * 5
     }
     
     func gameOver() {
-        
+        _point += _flaggedMine * 5
     }
     
     func toggleFlag() {
