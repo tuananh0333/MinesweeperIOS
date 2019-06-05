@@ -11,39 +11,41 @@ import UIKit
 class ColumnStackController: UIStackView {
     //MARK: Properties
     private var rowList = [RowStackController]()
-    private var board: BoardModel = BoardModel()
-    @IBInspectable var rows: Int = 16 {
+    private var board: BoardModel = BoardModel() {
         didSet {
-            initData()
+            setupButton()
         }
     }
-    @IBInspectable var cols: Int = 8 {
-        didSet {
-            initData()
-        }
-    }
+    private var rows: Int = 16
+    private var cols: Int = 8
     
     //MARK: Constructor
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initData()
     }
     
     required init(coder: NSCoder) {
         super.init(coder: coder)
-        initData()
     }
     
     func toggleFlag() {
         board.toggleFlag()
     }
     
+    func setBoardSize(rows: Int, cols: Int) {
+        self.rows = rows
+        self.cols = cols
+        
+        initData()
+    }
+    
     func initData() {
+        //MARK: Make new board model and generate data
         board = BoardModel(rows, cols)
-        setupButton()
     }
     
     func setupButton() {
+        //MARK: Fresh row list
         for row in rowList {
             removeArrangedSubview(row)
             row.removeFromSuperview()
@@ -51,12 +53,11 @@ class ColumnStackController: UIStackView {
         rowList.removeAll()
         
         for y in 0 ..< rows {
-            // Create new button
+            //MARK: Create new row stack
             let stkRow = RowStackController()
 
             for x in 0 ..< cols {
-                // Create new button
-                
+                //MARK: Create new button at x, y
                 if let btnTile = board.getTileAt(x, y) {
                     
                     //config width and height attributes
@@ -90,7 +91,7 @@ class ColumnStackController: UIStackView {
         if let pressedButton = button as? TileControl {
             board.touch(pressedButton)
             
-            print(pressedButton.getTileModel().getY(), ",", pressedButton.getTileModel().getX(), "")
+            print(pressedButton.getTileModel().getX(), ",", pressedButton.getTileModel().getY(), "")
             print("Mine around: ", pressedButton.getTileModel().getMineCounter())
         }
     }

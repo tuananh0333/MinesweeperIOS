@@ -22,7 +22,7 @@ class Tile {
         case flagTile
     }
 
-    private var imageDictionary: [State: String] = [.hide: "hidden",
+    private var imageName: [State: String] = [.hide: "hidden",
                                              .opened: "opened",
                                              .flagged: "flagged",
                                              .marked: "marked",
@@ -36,7 +36,7 @@ class Tile {
     private var state: State
     private var isMine: Bool
     
-    init(x: Int, y: Int) {
+    init(_ x: Int, _ y: Int) {
         self.y = y
         self.x = x
         
@@ -140,7 +140,7 @@ class Tile {
     }
     
     func getImageName() -> String? {
-        if let imageName = imageDictionary[state] {
+        if let imageName = imageName[state] {
             return imageName + (state == .opened ? getChildImage() : "")
         }
         else {

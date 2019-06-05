@@ -52,4 +52,10 @@ class TileControl: UIButton {
     func setTileModel(_ tileModel: Tile) {
         self.tileModel = tileModel
     }
+    
+    func touch(touchMode: BoardModel.TouchMode) -> Tile.State {
+        let state = tileModel.touch(touchMode: touchMode)
+        updateImage()
+        return state
+    }
 }

@@ -29,8 +29,16 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //MARK: Create board
+        stkBoard.setBoardSize(rows: 16, cols: 8)
     }
+
+    
+    @IBAction func btnReset(_ sender: UIButton) {
+        stkBoard.initData()
+    }
+    
     @IBAction func btnBackToHome(_ sender: UIButton) {
     }
 
