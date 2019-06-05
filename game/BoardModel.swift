@@ -183,7 +183,7 @@ class BoardModel {
                 }
             }
             _openedTiles += 1
-            GameController.shareInstance.point += tile.getTileModel().getMineCounter() * 2
+            GameController.shareInstance.score += tile.getTileModel().getMineCounter() * 2
             
         case .exploded:
             gameOver()
@@ -218,10 +218,10 @@ class BoardModel {
     }
     
     func win() {
-        GameController.shareInstance.point += _maxMines * 5
+        GameController.shareInstance.score += _maxMines * 5
     }
     
     func gameOver() {
-        GameController.shareInstance.point += _flaggedMine * 5
+        GameController.shareInstance.score += _flaggedMine * 5
     }
 }

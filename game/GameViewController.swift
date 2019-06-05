@@ -9,39 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private var flagImage: [GameController.TouchMode: String] = [.normal: "flagging", .flag: "flagged"]
-    
-    public var isOver = false {
-        didSet {
-            if(isOver) {
-                let alert = UIAlertController(title: "Game Over", message: "Back to home?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                    self.dismiss(animated: true, completion: nil)
-                }))
-                alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-    
+    //TODO: Move to GameController
     public var flags: Int = 0 {
         didSet {
             lblBombNumber.text = String(flags)
-        }
-    }
-    
-    var touchMode: GameController.TouchMode = .normal {
-        didSet {
-            guard let imageName = flagImage[touchMode] else {
-                print("Image not found")
-                return
-            }
-            
-            if let image = UIImage(named: imageName) {
-                btnFlagOutlet.setBackgroundImage(image, for: .normal)
-            }
-
-            stkBoard.toggleFlag()
         }
     }
 	
@@ -53,16 +24,49 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GameController.shareInstance.pointUpdate = { [weak self] (point: Int) in
-            self?.useData(point: point)
-        }
+        callback()
         
         //MARK: Create board
         stkBoard.setBoardSize(rows: 16, cols: 8)
     }
+    
+    func callback() {
+        GameController.shareInstance.scoreUpdate = {
+            [weak self] (score: Int) in self?.updateScore(score)
+        }
 
-    func useData(point: Int) {
-        lblScore.text = String(point)
+        GameController.shareInstance.touchModeUpdate = {
+            [weak self] (touchMode: GameController.TouchMode) in self?.toggleFlagButton(touchMode)
+        }
+        
+        GameController.shareInstance.isOver = {
+            [weak self] (state: Bool) in self?.isOver(state)
+        }
+    }
+
+    func updateScore(_ score: Int) {
+        lblScore.text = String(score)
+    }
+        
+    func toggleFlagButton(_ touchMode: GameController.TouchMode) {
+        guard let imageName = GameController.shareInstance.flagImage[touchMode] else {
+            print("Image not found")
+            return
+        }
+        
+        if let image = UIImage(named: imageName) {
+            btnFlagOutlet.setBackgroundImage(image, for: .normal)
+        }
+    }
+    
+    func isOver(_ state: Bool) {
+        // Create back to home dialog
+        let alert = UIAlertController(title: "Game Over", message: "Back to home?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func btnBackToHome(_ sender: UIButton) {
@@ -76,12 +80,7 @@ class ViewController: UIViewController {
 
     @IBAction func btnFlag(_ sender: UIButton) {
         //FIXIT: Cai nay chi can callback tu datamodel la duoc
-        if touchMode == .flag {
-            touchMode = .normal
-        }
-        else {
-            touchMode = .flag
-        }
+        GameController.shareInstance.toggleFlag()
     }
     
     override func didReceiveMemoryWarning() {
