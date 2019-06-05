@@ -9,48 +9,39 @@
 import UIKit
 
 @IBDesignable class RowStackController: UIStackView {
-    //MARK: Fields
-    var index: Int? {
-        didSet {
-            setupButton()
-        }
-    }
-    private var tilesRow = [TileControl]()
-    var buttons: Int = 9
-    
     //MARK: Properties
-    func setIndex(index:Int) {
-        self.index = index
-    }
+    private var tilesList = [TileControl]()
     
     //MARK: Constructors
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupTile()
     }
     
     required init(coder: NSCoder) {
         super.init(coder: coder)
+        setupTile()
     }
     
     //MARK: Init
-    func setupButton() {
-        for tile in tilesRow {
+    func setupTile() {
+        for tile in tilesList {
             removeArrangedSubview(tile)
             tile.removeFromSuperview()
         }
         
-        tilesRow.removeAll()
+        tilesList.removeAll()
         
         self.distribution = .fillEqually
         self.spacing = 3
     }
     
     
-    func addTileToStackView(tile: TileControl){
+    func addTile(_ tile: TileControl){
         //add buttons to stack view
         addArrangedSubview(tile)
         
         //add the button to list
-        tilesRow += [tile]
+        tilesList += [tile]
     }
 }

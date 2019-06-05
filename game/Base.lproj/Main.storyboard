@@ -209,6 +209,7 @@
                         <outlet property="btnFlagOutlet" destination="klD-9N-qUw" id="fTH-PW-kOK"/>
                         <outlet property="lblBombNumber" destination="JRg-dc-iVk" id="kQP-iG-Phj"/>
                         <outlet property="lblScore" destination="yPU-0d-VBQ" id="Kt6-zn-Tob"/>
+                        <outlet property="stkBoard" destination="ZKY-M4-EB9" id="7oA-9l-Glv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

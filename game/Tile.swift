@@ -16,13 +16,17 @@ class Tile {
         case flagging
         case exploded
     }
-//    var imageDictionary: [State: String] = [.hide: "hiden", .opened: "opened", .flagged: "flagged", .marked: "marked", .flagging: "flagging", .exploded: "boom"]
-    
-    private var imageDictionary: [State: String] = [.hide: "hiden",
+
+    enum Trigger {
+        case openTile
+        case flagTile
+    }
+
+    private var imageName: [State: String] = [.hide: "hidden",
                                              .opened: "opened",
-                                             .flagged: "flaged",
+                                             .flagged: "flagged",
                                              .marked: "marked",
-                                             .flagging: "flaging",
+                                             .flagging: "flagging",
                                              .exploded: "exploded"]
     
     private var y: Int
@@ -32,7 +36,7 @@ class Tile {
     private var state: State
     private var isMine: Bool
     
-    init(x: Int, y: Int) {
+    init(_ x: Int, _ y: Int) {
         self.y = y
         self.x = x
         
@@ -70,16 +74,14 @@ class Tile {
         return mineCounter
     }
     
-    func setMineCounter(value: Int) {
-        if (value <= 0) {
-            self.mineCounter = 0
-        } else if (value >= 9) {
-            self.mineCounter = 9
-        } else {
-            self.mineCounter = value
+    func increaseMineCounter(by: Int) {
+        if isMine {
+            return
         }
-        
-//        self.mineCounter = value <= 0 ? 0 : (value >= 9 ? 9 : value)
+        if by < 0 {
+            return
+        }
+        self.mineCounter += 1
     }
     
     func getState() -> State {
@@ -98,40 +100,55 @@ class Tile {
         return self.isMine
     }
     
-    func pressed(touchMode: ColumnStackController.TouchMode) -> Bool{
-        var isOk = true
-        if touchMode == .normal {
-            if state == .hide {
-                if (isMine) {
-                    state = .exploded
-                    isOk = false
-                }
-                else {
-                    state = .opened
-                }
+    func touch(touchMode: BoardModel.TouchMode) -> State {
+        switch touchMode {
+        case .flag:
+            flagTile()
+        case .normal:
+            openTile()
+        }
+
+        return state
+    }
+    
+    private func openTile() {
+        if state == .hide {
+            if (isMine) {
+                state = .exploded
+            }
+            else {
+                state = .opened
             }
         }
-        else {
-            //MARK: Touchtype == Flag
-            switch state {
-            case .hide:
-                state = .flagged
-            case .flagged:
-                state = .marked
-            case .marked:
-                state = .hide
-            case .opened:
-                break
-            case .flagging:
-                break
-            case .exploded:
-                break
-            }
+    }
+    
+    private func flagTile() {
+        switch state {
+        case .hide:
+            state = .flagged
+        case .flagged:
+            state = .marked
+        case .marked:
+            state = .hide
+        case .opened:
+            break
+        case .flagging:
+            break
+        case .exploded:
+            break
         }
-        return isOk
     }
     
     func getImageName() -> String? {
-        return imageDictionary[state]
+        if let imageName = imageName[state] {
+            return imageName + (state == .opened ? getChildImage() : "")
+        }
+        else {
+            return nil
+        }
+    }
+    
+    private func getChildImage() -> String {
+        return mineCounter == 0 ? "" : mineCounter.description
     }
 }

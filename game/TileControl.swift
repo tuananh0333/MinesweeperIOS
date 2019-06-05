@@ -9,7 +9,7 @@
 import UIKit
 
 class TileControl: UIButton {
-
+    //MARK: Properties
     private var tileSize: CGFloat = CGFloat(5)
     private var tileModel: Tile {
         didSet {
@@ -18,7 +18,7 @@ class TileControl: UIButton {
     }
     
     func createTile(x:Int, y:Int, tileSize: CGFloat) {
-        self.tileModel = Tile(x: x, y: y)
+        self.tileModel = Tile(x, y)
         self.tileSize = tileSize
 
         setImage()
@@ -29,17 +29,20 @@ class TileControl: UIButton {
         if let image = UIImage(named: tileModel.getImageName()!, in: bundle, compatibleWith: self.traitCollection) {
             if(tileModel.getState() == .flagged || tileModel.getState() == .flagging) {
                 setImage(image, for: .normal)
-                setBackgroundImage(UIImage(named: "hiden", in: bundle, compatibleWith: self.traitCollection), for: .normal)
+                setBackgroundImage(UIImage(named: "hidden", in: bundle, compatibleWith: self.traitCollection), for: .normal)
             } else {
                 if let imageName = tileModel.getImageName() {
                     if let image = UIImage(named: imageName, in: bundle, compatibleWith: self.traitCollection) {
                         setBackgroundImage(image, for: .normal)
+//                        setImage(image, for: .normal)
                     }
                 }
             }
+            updateImage()
         }
     }
     
+    //MARK: Constructor
     override init(frame: CGRect) {
         self.tileModel = Tile()
         
@@ -50,6 +53,23 @@ class TileControl: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateImage() {
+        let bundle = Bundle(for: type(of: self))
+        if let imageName = tileModel.getImageName() {
+            if let image = UIImage(named: imageName,
+                                   in: bundle,
+                                   compatibleWith: self.traitCollection) {
+                setBackgroundImage(image, for: .normal)
+            }
+            else {
+                print ("Can't not find image!")
+            }
+        }
+        else {
+            print ("Image name for state: ", tileModel.getState(), " is not define!")
+        }
+    }
+    
     func getTileModel() -> Tile {
         return self.tileModel
     }
@@ -58,7 +78,9 @@ class TileControl: UIButton {
         self.tileModel = tileModel
     }
     
-    func pressed(touchMode: ColumnStackController.TouchMode) -> Bool{
-        return tileModel.pressed(touchMode: touchMode)
+    func touch(touchMode: BoardModel.TouchMode) -> Tile.State {
+        let state = tileModel.touch(touchMode: touchMode)
+        updateImage()
+        return state
     }
 }
