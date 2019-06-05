@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59010C3222A56E6A00D34B69 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59010C3122A56E6A00D34B69 /* BoardModel.swift */; };
+		59174F1022A7644B00F9B429 /* ScoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59174F0F22A7644B00F9B429 /* ScoreTableViewController.swift */; };
 		591E2CDE22A37DF800B364F3 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CDD22A37DF800B364F3 /* RoundButton.swift */; };
 		591E2CE022A385FD00B364F3 /* HomeScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CDF22A385FD00B364F3 /* HomeScreenController.swift */; };
 		591E2CE222A39CE400B364F3 /* RowstackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E2CE122A39CE400B364F3 /* RowstackController.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		59010C3122A56E6A00D34B69 /* BoardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
+		59174F0F22A7644B00F9B429 /* ScoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTableViewController.swift; sourceTree = "<group>"; };
 		591E2CDD22A37DF800B364F3 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		591E2CDF22A385FD00B364F3 /* HomeScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenController.swift; sourceTree = "<group>"; };
 		591E2CE122A39CE400B364F3 /* RowstackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowstackController.swift; sourceTree = "<group>"; };
@@ -89,6 +93,7 @@
 		596E46B422A2C58A00DD08FA /* game */ = {
 			isa = PBXGroup;
 			children = (
+				59010C3122A56E6A00D34B69 /* BoardModel.swift */,
 				591E2CE522A3AE8C00B364F3 /* Tile.swift */,
 				591E2CE622A3AE8C00B364F3 /* TileControl.swift */,
 				591E2CE322A3A24600B364F3 /* ColumnStackController.swift */,
@@ -101,6 +106,7 @@
 				596E46BC22A2C58A00DD08FA /* Assets.xcassets */,
 				596E46BE22A2C58A00DD08FA /* LaunchScreen.storyboard */,
 				596E46C122A2C58A00DD08FA /* Info.plist */,
+				59174F0F22A7644B00F9B429 /* ScoreTableViewController.swift */,
 			);
 			path = game;
 			sourceTree = "<group>";
@@ -223,7 +229,9 @@
 				591E2CE822A3AE8C00B364F3 /* TileControl.swift in Sources */,
 				591E2CE722A3AE8C00B364F3 /* Tile.swift in Sources */,
 				591E2CE022A385FD00B364F3 /* HomeScreenController.swift in Sources */,
+				59010C3222A56E6A00D34B69 /* BoardModel.swift in Sources */,
 				596E46B622A2C58A00DD08FA /* AppDelegate.swift in Sources */,
+				59174F1022A7644B00F9B429 /* ScoreTableViewController.swift in Sources */,
 				591E2CE422A3A24600B364F3 /* ColumnStackController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

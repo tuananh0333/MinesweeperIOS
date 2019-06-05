@@ -10,6 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    public var score:Int = 0{
+        didSet {
+            lblScore.text = String(score)
+        }
+    }
+    
+    public var flags: Int = 0 {
+        didSet {
+            lblBombNumber.text = String(flags)
+        }
+    }
+    
+    
     var isFlagging = false {
         didSet {
             if isFlagging {
@@ -29,6 +42,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     @IBAction func btnBackToHome(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     @IBAction func btnFlag(_ sender: UIButton) {
         isFlagging = !isFlagging

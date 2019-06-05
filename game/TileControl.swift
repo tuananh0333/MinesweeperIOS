@@ -26,14 +26,16 @@ class TileControl: UIButton {
     
     func setImage() {
         let bundle = Bundle(for: type(of: self))
-        if let image = UIImage(named: tileModel.imageDictionary[tileModel.status]!, in: bundle, compatibleWith: self.traitCollection) {
-            if(tileModel.status == .flagged || tileModel.status == .flagging) {
+        if let image = UIImage(named: tileModel.getImageName()!, in: bundle, compatibleWith: self.traitCollection) {
+            if(tileModel.getState() == .flagged || tileModel.getState() == .flagging) {
                 setImage(image, for: .normal)
                 setBackgroundImage(UIImage(named: "hiden", in: bundle, compatibleWith: self.traitCollection), for: .normal)
             } else {
-        if let imageName = tileModel.getImageName() {
-            if let image = UIImage(named: imageName, in: bundle, compatibleWith: self.traitCollection) {
-                setBackgroundImage(image, for: .normal)
+                if let imageName = tileModel.getImageName() {
+                    if let image = UIImage(named: imageName, in: bundle, compatibleWith: self.traitCollection) {
+                        setBackgroundImage(image, for: .normal)
+                    }
+                }
             }
         }
     }
@@ -44,7 +46,7 @@ class TileControl: UIButton {
         super.init(frame: frame)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
