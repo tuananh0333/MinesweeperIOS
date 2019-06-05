@@ -100,7 +100,7 @@ class Tile {
         return self.isMine
     }
     
-    func touch(touchMode: BoardModel.TouchMode) -> State {
+    func touch(touchMode: GameController.TouchMode) -> State {
         switch touchMode {
         case .flag:
             flagTile()

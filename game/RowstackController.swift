@@ -12,26 +12,30 @@ import UIKit
     //MARK: Properties
     private var tilesList = [TileControl]()
     
-    //MARK: Constructors
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupTile()
+        createEmptyStackView()
+        configAttributes()
     }
     
     required init(coder: NSCoder) {
         super.init(coder: coder)
-        setupTile()
+        
+        createEmptyStackView()
+        configAttributes()
     }
     
-    //MARK: Init
-    func setupTile() {
+    //MARK: Remove all Tile in list, then config
+    func createEmptyStackView() {
         for tile in tilesList {
             removeArrangedSubview(tile)
             tile.removeFromSuperview()
         }
         
         tilesList.removeAll()
-        
+    }
+    
+    private func configAttributes() {
         self.distribution = .fillEqually
         self.spacing = 3
     }

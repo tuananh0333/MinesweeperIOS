@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    private var flagImage: [GameController.TouchMode: String] = [.normal: "flagging", .flag: "flagged"]
     
     public var isOver = false {
         didSet {
@@ -23,27 +24,23 @@ class ViewController: UIViewController {
         }
     }
     
-    public var score:Int = 0{
-        didSet {
-            lblScore.text = String(score)
-        }
-    }
-    
     public var flags: Int = 0 {
         didSet {
             lblBombNumber.text = String(flags)
         }
     }
     
-    
-    var isFlagging = false {
+    var touchMode: GameController.TouchMode = .normal {
         didSet {
-            if isFlagging {
-                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagged"), for: .normal)
-            } else {
-                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagging"), for: .normal)
+            guard let imageName = flagImage[touchMode] else {
+                print("Image not found")
+                return
             }
             
+            if let image = UIImage(named: imageName) {
+                btnFlagOutlet.setBackgroundImage(image, for: .normal)
+            }
+
             stkBoard.toggleFlag()
         }
     }
@@ -56,13 +53,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        GameController.shareInstance.pointUpdate = { [weak self] (point: Int) in
+            self?.useData(point: point)
+        }
+        
         //MARK: Create board
         stkBoard.setBoardSize(rows: 16, cols: 8)
     }
 
-    
-    @IBAction func btnReset(_ sender: UIButton) {
-        stkBoard.initData()
+    func useData(point: Int) {
+        lblScore.text = String(point)
     }
     
     @IBAction func btnBackToHome(_ sender: UIButton) {
@@ -75,7 +75,13 @@ class ViewController: UIViewController {
     }
 
     @IBAction func btnFlag(_ sender: UIButton) {
-        isFlagging = !isFlagging
+        //FIXIT: Cai nay chi can callback tu datamodel la duoc
+        if touchMode == .flag {
+            touchMode = .normal
+        }
+        else {
+            touchMode = .flag
+        }
     }
     
     override func didReceiveMemoryWarning() {
