@@ -58,9 +58,9 @@ class TileControl: UIButton {
 
         updateImage()
         
-        if _tileModel.state == .opened && !_tileModel.isOpened {
+        
+        if _tileModel.state == .opened && self.isEnabled == true {
             BoardModel.shareInstance.score += _tileModel.mineCounter * 2
-            _tileModel.isOpened = true
             isEnabled = false
         }
     }
@@ -99,7 +99,6 @@ class TileControl: UIButton {
             print(_tileModel.state)
             if _tileModel.state == .flagged {
                 imageName.append("bomb")
-                print(imageName)
             }
             else {
                 imageName = "unflaggedbomb"

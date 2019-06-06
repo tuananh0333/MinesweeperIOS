@@ -190,8 +190,14 @@ class BoardModel {
         let xRange = 0 ..< _cols
         let yRange = 0 ..< _rows
         
-        if xRange.contains(x) && yRange.contains(y) {
-            return _tilesList[x][y]
+        if xRange.contains(x) && yRange.contains(y){
+            let selectedTile = _tilesList[x][y]
+            if !selectedTile.isEnabled || selectedTile.getTileModel().state == .opened {
+                return nil
+            }
+            else {
+                return selectedTile
+            }
         }
         
         return nil
