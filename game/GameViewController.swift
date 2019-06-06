@@ -9,11 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var flagImage: [BoardModel.TouchMode: String] = [.normal: "flagging", .flag: "flagged"]
 	
     @IBOutlet weak var stkBoard: ColumnStackController!
     @IBOutlet weak var lblBombNumber: UILabel!
     @IBOutlet weak var lblScore: UILabel!
     @IBOutlet weak var btnFlagOutlet: UIButton!
+    
+    var board: BoardModel = BoardModel.shareInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +32,6 @@ class ViewController: UIViewController {
         BoardModel.shareInstance.scoreUpdate = {
             [weak self] (score: Int) in self?.updateScore(score)
         }
-
-        BoardModel.shareInstance.touchModeUpdate = {
-            [weak self] (touchMode: BoardModel.TouchMode) in self?.toggleFlagButton(touchMode)
-        }
         
         BoardModel.shareInstance.isOver = {
             [weak self] (state: Bool) in self?.isOver(state)
@@ -40,17 +40,6 @@ class ViewController: UIViewController {
 
     func updateScore(_ score: Int) {
         lblScore.text = String(score)
-    }
-        
-    func toggleFlagButton(_ touchMode: BoardModel.TouchMode) {
-        guard let imageName = BoardModel.shareInstance.flagImage[touchMode] else {
-            print("Image not found")
-            return
-        }
-        
-        if let image = UIImage(named: imageName) {
-            btnFlagOutlet.setBackgroundImage(image, for: .normal)
-        }
     }
     
     func isOver(_ state: Bool) {
@@ -73,8 +62,19 @@ class ViewController: UIViewController {
     }
 
     @IBAction func btnFlag(_ sender: UIButton) {
-        //FIXIT: Cai nay chi can callback tu datamodel la duoc
-        BoardModel.shareInstance.toggleFlag()
+        guard let imageName = flagImage[board.touchMode] else {
+            print("Image name is not defined")
+            return
+        }
+        
+        guard let btnFlagImage = UIImage(named: imageName) else {
+            print(board.touchMode, "Image not found")
+            return
+        }
+        
+        sender.setBackgroundImage(btnFlagImage, for: .normal)
+        
+        board.toggleFlag()
     }
     
     override func didReceiveMemoryWarning() {

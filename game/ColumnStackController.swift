@@ -12,7 +12,7 @@ class ColumnStackController: UIStackView {
     //MARK: Properties
     private var rowList = [RowStackController]()
 
-private let board: BoardModel = BoardModel()
+    private let board: BoardModel = BoardModel.shareInstance
     private var rows: Int = 16
     private var cols: Int = 8
     
@@ -23,10 +23,6 @@ private let board: BoardModel = BoardModel()
     
     required init(coder: NSCoder) {
         super.init(coder: coder)
-    }
-    
-    func toggleFlag() {
-        BoardModel.shareInstance.toggleFlag()
     }
     
     func setBoardSize(rows: Int, cols: Int) {

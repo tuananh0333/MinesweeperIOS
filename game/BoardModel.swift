@@ -43,7 +43,7 @@ class BoardModel {
     }
     var scoreUpdate: ((_ score: Int) -> Void)?
     
-    private var _touchMode: TouchMode = .normal {
+    private var _touchMode: TouchMode {
         didSet {
             touchModeUpdate?(_touchMode)
         }
@@ -74,7 +74,6 @@ class BoardModel {
     var difficultMaxMine: [Difficult: Int] = [.easy: 10,
                                               .normal: 8,
                                               .hard: 5]
-    var flagImage: [TouchMode: String] = [.normal: "flagging", .flag: "flagged"]
     private var _nearbyTileOffset: [NearbyTileFilterType: [(Int, Int)]] = [.plus: [(0, -1), (-1, 0), (1, 0), (0, 1)],
                                                                            .square: [(-1, -1), (0, -1), (1, -1),
                                                                                      (-1, 0), (1, 0),
