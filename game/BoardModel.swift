@@ -161,7 +161,7 @@ class BoardModel {
             return
         }
         
-        let touchMode = GameController.shareInstance.touchMode
+        let touchMode = GameModel.shareInstance.touchMode
         
         if touchMode == .flag && _flaggedTiles == _minesAmount {
             print("You have reach maximum flagged")
@@ -183,7 +183,7 @@ class BoardModel {
                 }
             }
             _openedTiles += 1
-            GameController.shareInstance.score += tile.getTileModel().getMineCounter() * 2
+            GameModel.shareInstance.score += tile.getTileModel().getMineCounter() * 2
             
         case .exploded:
             gameOver()
@@ -218,10 +218,10 @@ class BoardModel {
     }
     
     func win() {
-        GameController.shareInstance.score += _maxMines * 5
+        GameModel.shareInstance.score += _maxMines * 5
     }
     
     func gameOver() {
-        GameController.shareInstance.score += _flaggedMine * 5
+        GameModel.shareInstance.score += _flaggedMine * 5
     }
 }

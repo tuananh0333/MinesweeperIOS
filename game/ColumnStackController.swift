@@ -26,7 +26,7 @@ class ColumnStackController: UIStackView {
     }
     
     func toggleFlag() {
-        GameController.shareInstance.toggleFlag()
+        GameModel.shareInstance.toggleFlag()
     }
     
     func setBoardSize(rows: Int, cols: Int) {
@@ -75,7 +75,6 @@ class ColumnStackController: UIStackView {
         }
     }
     
-    //MARK: Rating actions
     @objc func touchTile(button: UIButton) {
         if board.isOver {
             //MARK: Show replay dialog
