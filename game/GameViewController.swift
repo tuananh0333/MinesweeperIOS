@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     }
 
     func updateScore(_ score: Int) {
-        lblScore.text = String(score)
+//        lblScore.text = String(score)
     }
     
     func isOver(_ state: Bool) {
@@ -62,6 +62,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func btnFlag(_ sender: UIButton) {
+        board.toggleFlag()
+        
         guard let imageName = flagImage[board.touchMode] else {
             print("Image name is not defined")
             return
@@ -73,8 +75,7 @@ class ViewController: UIViewController {
         }
         
         sender.setBackgroundImage(btnFlagImage, for: .normal)
-        
-        board.toggleFlag()
+
     }
     
     override func didReceiveMemoryWarning() {

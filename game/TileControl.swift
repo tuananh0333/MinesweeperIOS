@@ -54,11 +54,8 @@ class TileControl: UIButton {
     }
     
     func updateImage() {
-        let bundle = Bundle(for: type(of: self))
         if let imageName = tileModel.getImageName() {
-            if let image = UIImage(named: imageName,
-                                   in: bundle,
-                                   compatibleWith: self.traitCollection) {
+            if let image = UIImage(named: imageName) {
                 setBackgroundImage(image, for: .normal)
             }
             else {

@@ -62,6 +62,8 @@ class BoardModel {
     }
     
     //TODO: Tao 1 enum chua cac state cua game
+    // false: Chua thua
+    // true: da thua
     var gameState: Bool = false {
         didSet {
             isOver?(gameState)
@@ -207,6 +209,11 @@ class BoardModel {
     }
 
     func touch(_ tile: TileControl) {
+        if gameState == true {
+            print("Game is over")
+            return
+        }
+        
         if isWin() {
             win()
             print("You win")
@@ -223,13 +230,18 @@ class BoardModel {
         switch state {
         case .opened:
             // Expand if no mine around
-            if tile.getTileModel().getMineCounter() == 0 {
-                guard let nearbyTiles = getNearbyTiles(of: tile, type: .plus) else {
+            if tile.getTileModel().getMineCounter() <= 0 {
+                guard let nearbyTiles = getNearbyTiles(of: tile, type: .square) else {
                     return
                 }
                 
                 for nearbyTile in nearbyTiles {
-                    touch(nearbyTile)
+                    if nearbyTile.getTileModel().getState() == .hide && nearbyTile.getTileModel().getMineCounter() == 0 {
+                        touch(nearbyTile)
+                    }
+                    else {
+                        nearbyTile.touch(touchMode: touchMode)
+                    }
                 }
             }
             _openedTiles += 1
@@ -237,7 +249,6 @@ class BoardModel {
             
         case .exploded:
             gameOver()
-            gameState = true
         case .flagged:
             _flaggedTiles += 1
             
@@ -272,6 +283,7 @@ class BoardModel {
     }
     
     func gameOver() {
+        gameState = true
         score += _flaggedMine * 5
     }
 }

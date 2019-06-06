@@ -31,7 +31,7 @@ class ColumnStackController: UIStackView {
         
         board.setBoardSize(rows: rows, cols: cols)
         
-        setupButton()
+        setupButton() 
     }
     
     func setupButton() {
