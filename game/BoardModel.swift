@@ -8,10 +8,6 @@
 
 import Foundation
 class BoardModel {
-    enum NearbyTileFilterType {
-        case square
-        case plus
-    }
     enum TouchMode {
         case flag
         case normal
@@ -20,6 +16,11 @@ class BoardModel {
         case easy
         case normal
         case hard
+    }
+    enum GameState {
+        case win
+        case playing
+        case over
     }
     
     //MARK: Fields
@@ -30,7 +31,7 @@ class BoardModel {
     private var _openedTiles = 0
     private var _flaggedTiles = 0
     private var _flaggedMine = 0
-    private var _tilesField: [[TileControl]] = []
+    private var _tilesList: [[TileControl]] = []
     
     private var _score = 0 {
         didSet {
@@ -43,7 +44,7 @@ class BoardModel {
     }
     var scoreUpdate: ((_ score: Int) -> Void)?
     
-    private var _touchMode: TouchMode {
+    private var _touchMode: TouchMode = .normal {
         didSet {
             touchModeUpdate?(_touchMode)
         }
@@ -60,34 +61,21 @@ class BoardModel {
             _touchMode = .normal
         }
     }
-    
-    //TODO: Tao 1 enum chua cac state cua game
-    // false: Chua thua
-    // true: da thua
-    var gameState: Bool = false {
+
+    var gameState: GameState = .playing {
         didSet {
             isOver?(gameState)
         }
     }
-    var isOver: ((_ state: Bool) -> Void)?
+    var isOver: ((_ state: GameState) -> Void)?
     
     static let shareInstance = BoardModel()
     
-    var difficultMaxMine: [Difficult: Int] = [.easy: 10,
-                                              .normal: 8,
-                                              .hard: 5]
-    private var _nearbyTileOffset: [NearbyTileFilterType: [(Int, Int)]] = [.plus: [(0, -1), (-1, 0), (1, 0), (0, 1)],
-                                                                           .square: [(-1, -1), (0, -1), (1, -1),
-                                                                                     (-1, 0), (1, 0),
-                                                                                     (-1, 1), (0, 1), (1, 1)]]
+    var difficultMaxMine: [Difficult: Int] = [.easy: 10, .normal: 8, .hard: 5]
+    private var _nearbyTileOffset: [(Int, Int)] = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
     
     init() {
-        _maxMines = 0
-        _minesAmount = 0
-        gameState = false
-        _touchMode = .normal
-        _score = 0
-        
+        resetBoardProperties()
         setupTileField()
     }
     
@@ -95,78 +83,71 @@ class BoardModel {
         self._rows = rows
         self._cols = cols
 
+        resetBoardProperties()
+        setupTileField()
+    }
+    
+    private func resetBoardProperties() {
         _maxMines = 0
         _minesAmount = 0
-        gameState = false
-        
-        setupTileField()
+        gameState = .playing
+        _touchMode = .normal
+        _score = 0
     }
     
     //MARK: Prepare data
     func setupTileField() {
-        _tilesField = []
+        resetTilesList()
+        generateMine()
+        
         for x in 0 ..< _cols {
-            _tilesField.append([])
+            for y in 0 ..< _rows {
+                countMinesAround(tile: _tilesList[x][y])
+            }
+        }
+    }
+    
+    private func resetTilesList() {
+        _tilesList = []
+        for x in 0 ..< _cols {
+            _tilesList.append([])
             
             for y in 0 ..< _rows {
                 let btnTile = TileControl()
                 btnTile.setTileModel(Tile(x, y))
                 
-                _tilesField[x].append(btnTile)
-            }
-        }
-
-        generateMine()
-        
-        for x in 0 ..< _cols {
-            for y in 0 ..< _rows {
-                countMinesAround(tile: _tilesField[x][y])
+                _tilesList[x].append(btnTile)
             }
         }
     }
     
+    // If maxMines is not set (0 be default), mines amount is not stable
+    // If maxMines is set, keep generating until mines amount equal max Mine
+    // If a tile is a mine tile, increase mines amount
     func generateMine() {
         repeat {
             for x in 0 ..< _cols {
                 for y in 0 ..< _rows {
-                    setMineForTile(tile: _tilesField[x][y])
+                    let selectedTile = _tilesList[x][y]
+                    selectedTile.setMine(chance: 5)
+                    if selectedTile.getTileModel().isMineTile() {
+                        _minesAmount += 1
+                    }
                 }
             }
         } while (_minesAmount < _maxMines)
     }
-
-    func setMineForTile(tile: TileControl) {
-        let tileModel = tile.getTileModel()
-        
-        if tileModel.isMineTile() {
-            return
-        }
-        
-        var percent: Bool = false
-        if self._maxMines != 0 {
-            percent = ((arc4random() % UInt32(_maxMines)) == 0)
-        }
-        else {
-            percent = (arc4random_uniform(5) == 0)
-        }
-        
-        if percent == true {
-            tileModel.setMine(true)
-            _minesAmount += 1
-            print("Mine: ",tileModel.getX(), ",", tileModel.getY(), "")
-        }
-        
-        tile.setTileModel(tileModel)
-    }
     
+    // Not counting if:
+    // - tile is a mine tile
+    // - there is no tile near it
+    // If there is a mine tile near it: increase it's mine counter
     func countMinesAround(tile: TileControl) {
         if tile.getTileModel().isMineTile() {
             return
         }
         
-        guard let nearbyTiles: [TileControl] = getNearbyTiles(of: tile, type: .square) else {
-            return
-        }
+        let nearbyTiles: [TileControl] = getNearbyTiles(of: tile)
         
         for nearbyTile in nearbyTiles {
             if (nearbyTile.getTileModel().isMineTile()) {
@@ -175,75 +156,59 @@ class BoardModel {
         }
     }
     
-    func getNearbyTiles(of: TileControl, type: NearbyTileFilterType) -> [TileControl]? {
-        guard let offsets = _nearbyTileOffset[type] else {
-            print(type, " not found!")
-            return nil
-        }
-        
+    func getNearbyTiles(of: TileControl) -> [TileControl] {
         var nearbyTiles: [TileControl] = []
-        for (rowOffset, colOffset) in offsets {
+        
+        for (rowOffset, colOffset) in _nearbyTileOffset {
             if let nearbyTile = getTileAt(of.getTileModel().getX() + rowOffset, of.getTileModel().getY() + colOffset) {
-                var condition: Bool = true
-                if type == .plus {
-                    condition = !nearbyTile.getTileModel().isMineTile() && nearbyTile.getTileModel().getState() == .hide
-                }
-                
-                if condition {
-                    nearbyTiles.append(nearbyTile)
-                }
+                nearbyTiles.append(nearbyTile)
             }
         }
-        
+    
         return nearbyTiles
     }
     
+    // Return nil if tile(x, y) is outside the board
     func getTileAt(_ x: Int, _ y: Int) -> TileControl? {
-        if (x >= 0 && x < self._cols
-            && y >= 0 && y < self._rows) {
-            return _tilesField[x][y]
+        let xRange = 0 ..< _cols
+        let yRange = 0 ..< _rows
+        
+        if xRange.contains(x) && yRange.contains(y) {
+            return _tilesList[x][y]
         }
-        else {
-            return nil
-        }
+        
+        return nil
     }
 
     func touch(_ tile: TileControl) {
-        if gameState == true {
-            print("Game is over")
-            return
-        }
-        
-        if isWin() {
-            win()
-            print("You win")
-            return
-        }
-
+        // Check if reach maximum flag and mark
         if touchMode == .flag && _flaggedTiles == _minesAmount {
             print("You have reach maximum flagged")
             return
         }
         
-        let state = tile.touch(touchMode: touchMode)
+        tile.touchTile(touchMode: touchMode)
+        
+        let state = tile.getTileModel().getState()
         
         switch state {
         case .opened:
             // Expand if no mine around
             if tile.getTileModel().getMineCounter() <= 0 {
-                guard let nearbyTiles = getNearbyTiles(of: tile, type: .square) else {
-                    return
-                }
+                let nearbyTiles = getNearbyTiles(of: tile)
                 
                 for nearbyTile in nearbyTiles {
-                    if nearbyTile.getTileModel().getState() == .hide && nearbyTile.getTileModel().getMineCounter() == 0 {
+                    // Countinue expand if nearby tile is touchable and has no mine around it
+                    if nearbyTile.isTouchable() && nearbyTile.getTileModel().getMineCounter() == 0 {
                         touch(nearbyTile)
                     }
                     else {
-                        nearbyTile.touch(touchMode: touchMode)
+                        nearbyTile.touchTile(touchMode: touchMode)
                     }
                 }
             }
+            
+            // Increase score
             _openedTiles += 1
             score += tile.getTileModel().getMineCounter() * 2
             
@@ -267,10 +232,12 @@ class BoardModel {
     }
     
     func isWin() -> Bool{
+        // If all "not mine" tile is opened
         if _rows * _cols - _openedTiles == _minesAmount {
             return true
         }
         
+        // If all mine tile is flagged
         if _flaggedMine == _minesAmount {
             return true
         }
@@ -279,11 +246,12 @@ class BoardModel {
     }
     
     func win() {
+        gameState = .win
         score += _maxMines * 5
     }
     
     func gameOver() {
-        gameState = true
+        gameState = .over
         score += _flaggedMine * 5
     }
 }

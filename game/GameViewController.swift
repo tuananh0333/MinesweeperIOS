@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         }
         
         BoardModel.shareInstance.isOver = {
-            [weak self] (state: Bool) in self?.isOver(state)
+            [weak self] (state: BoardModel.GameState) in self?.gamestateChanged(state)
         }
     }
 
@@ -42,8 +42,17 @@ class ViewController: UIViewController {
 //        lblScore.text = String(score)
     }
     
-    func isOver(_ state: Bool) {
-        // Create back to home dialog
+    func gamestateChanged(_ state: BoardModel.GameState) {
+        switch state {
+        case .over:
+            showGameOverDialog()
+        default:
+            //TODO: Reaction for other state
+            break
+        }
+    }
+    
+    private func showGameOverDialog() {
         let alert = UIAlertController(title: "Game Over", message: "Back to home?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             self.dismiss(animated: true, completion: nil)
