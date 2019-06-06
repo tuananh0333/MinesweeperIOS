@@ -11,11 +11,8 @@ import UIKit
 class ColumnStackController: UIStackView {
     //MARK: Properties
     private var rowList = [RowStackController]()
-    private var board: BoardModel = BoardModel() {
-        didSet {
-            setupButton()
-        }
-    }
+
+private let board: BoardModel = BoardModel()
     private var rows: Int = 16
     private var cols: Int = 8
     
@@ -29,19 +26,16 @@ class ColumnStackController: UIStackView {
     }
     
     func toggleFlag() {
-        board.toggleFlag()
+        GameModel.shareInstance.toggleFlag()
     }
     
     func setBoardSize(rows: Int, cols: Int) {
         self.rows = rows
         self.cols = cols
         
-        initData()
-    }
-    
-    func initData() {
-        //MARK: Make new board model and generate data
-        board = BoardModel(rows, cols)
+        board.setBoardSize(rows: rows, cols: cols)
+        
+        setupButton()
     }
     
     func setupButton() {
@@ -80,7 +74,6 @@ class ColumnStackController: UIStackView {
             rowList += [stkRow]
         }
     }
-    
     //MARK: Rating actions
     @objc func touchTile(button: UIButton) {
         if board.isOver {

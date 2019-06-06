@@ -9,30 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    public var score:Int = 0{
-        didSet {
-            lblScore.text = String(score)
-        }
-    }
-    
-    public var flags: Int = 0 {
-        didSet {
-            lblBombNumber.text = String(flags)
-        }
-    }
-    
-    
-    var isFlagging = false {
-        didSet {
-            if isFlagging {
-                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagged"), for: .normal)
-            } else {
-                btnFlagOutlet.setBackgroundImage(UIImage(named: "flagging"), for: .normal)
-            }
-            
-            stkBoard.toggleFlag()
-        }
-    }
 	
     @IBOutlet weak var stkBoard: ColumnStackController!
     @IBOutlet weak var lblBombNumber: UILabel!
@@ -42,13 +18,49 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        callback()
+        
         //MARK: Create board
         stkBoard.setBoardSize(rows: 16, cols: 8)
     }
-
     
-    @IBAction func btnReset(_ sender: UIButton) {
-        stkBoard.initData()
+    func callback() {
+        GameModel.shareInstance.scoreUpdate = {
+            [weak self] (score: Int) in self?.updateScore(score)
+        }
+
+        GameModel.shareInstance.touchModeUpdate = {
+            [weak self] (touchMode: GameModel.TouchMode) in self?.toggleFlagButton(touchMode)
+        }
+        
+        GameModel.shareInstance.isOver = {
+            [weak self] (state: Bool) in self?.isOver(state)
+        }
+    }
+
+    func updateScore(_ score: Int) {
+        lblScore.text = String(score)
+    }
+        
+    func toggleFlagButton(_ touchMode: GameModel.TouchMode) {
+        guard let imageName = GameModel.shareInstance.flagImage[touchMode] else {
+            print("Image not found")
+            return
+        }
+        
+        if let image = UIImage(named: imageName) {
+            btnFlagOutlet.setBackgroundImage(image, for: .normal)
+        }
+    }
+    
+    func isOver(_ state: Bool) {
+        // Create back to home dialog
+        let alert = UIAlertController(title: "Game Over", message: "Back to home?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func btnBackToHome(_ sender: UIButton) {
@@ -61,7 +73,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func btnFlag(_ sender: UIButton) {
-        isFlagging = !isFlagging
+        //FIXIT: Cai nay chi can callback tu datamodel la duoc
+        GameModel.shareInstance.toggleFlag()
     }
     
     override func didReceiveMemoryWarning() {
