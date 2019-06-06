@@ -52,8 +52,9 @@ class ViewController: UIViewController {
     
     func flagTilesChanged(_ tilesCount: Int) {
         if lblBombNumber != nil {
-            lblBombNumber.text = String(tilesCount)
+            lblBombNumber.text = String(board.mineAmount - tilesCount)
         }
+        print("Bome number: ", board.mineAmount - tilesCount)
     }
     
     func gamestateChanged(_ state: BoardModel.GameState) {

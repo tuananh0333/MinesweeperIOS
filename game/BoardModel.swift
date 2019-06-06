@@ -26,7 +26,6 @@ class BoardModel {
     //MARK: Fields
     private var _rows: Int = 16
     private var _cols: Int = 8
-    private var _minesAmount = 0
     private var _maxMines = 0
     private var _openedTiles = 0
     private var _flaggedMine = 0
@@ -35,6 +34,11 @@ class BoardModel {
         didSet {
             
         }
+    }
+    
+    private var _minesAmount = 0
+    var mineAmount: Int {
+        get { return _minesAmount }
     }
     
     private var _score = 0 {
@@ -77,9 +81,6 @@ class BoardModel {
         didSet {
             flaggedTilesChanged?(_flaggedTiles)
         }
-    }
-    var flaggedTiles: Int {
-        get { return _flaggedTiles }
     }
     var flaggedTilesChanged: ((_ tilesCount: Int) -> Void)?
     
