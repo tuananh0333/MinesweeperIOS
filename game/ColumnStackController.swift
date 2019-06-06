@@ -82,9 +82,6 @@ class ColumnStackController: UIStackView {
             }
             
             board.touch(pressedButton)
-            
-            print(pressedButton.getTileModel().getX(), ",", pressedButton.getTileModel().getY(), "")
-            print("Mine around: ", pressedButton.getTileModel().getMineCounter())
         }
     }
 }

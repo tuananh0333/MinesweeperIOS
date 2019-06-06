@@ -10,8 +10,8 @@ import UIKit
 
 class TileControl: UIButton {
     //MARK: Properties
-    private var tileSize: CGFloat = CGFloat(5)
-    private var tileModel: Tile = Tile()
+    private var _tileSize: CGFloat = CGFloat(5)
+    private var _tileModel: Tile = Tile()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,13 +20,13 @@ class TileControl: UIButton {
     }
     
     func updateImage() {
-        guard let imageName = tileModel.getImageName() else {
+        guard let imageName = _tileModel.imageName else {
             print("Image is not defined")
             return
         }
         
         if let image = UIImage(named: imageName) {
-            if self.tileModel.getState() == .flagged || self.tileModel.getState() == .marked {
+            if self._tileModel.state == .flagged || self._tileModel.state == .marked {
                 self.setBackgroundImage(UIImage(named: "hidden"), for: .normal)
                 self.setImage(image, for: .normal)
             }
@@ -46,20 +46,21 @@ class TileControl: UIButton {
     }
     
     func getTileModel() -> Tile {
-        return self.tileModel
+        return self._tileModel
     }
     
     func setTileModel(_ tileModel: Tile) {
-        self.tileModel = tileModel
+        self._tileModel = tileModel
     }
     
     func touchTile(touchMode: BoardModel.TouchMode) {
-        tileModel.touch(touchMode: touchMode)
+        _tileModel.touch(touchMode: touchMode)
+
         updateImage()
         
-        if tileModel.getState() == .opened && !tileModel.isOpened {
-            BoardModel.shareInstance.score += tileModel.getMineCounter() * 2
-            tileModel.isOpened = true
+        if _tileModel.state == .opened && !_tileModel.isOpened {
+            BoardModel.shareInstance.score += _tileModel.mineCounter * 2
+            _tileModel.isOpened = true
             isEnabled = false
         }
     }
@@ -68,7 +69,7 @@ class TileControl: UIButton {
     // - game is not win or over
     // - state of tile is hide (or untouched)
     func isTouchable() -> Bool {
-        if tileModel.getState() == .hide {
+        if _tileModel.state == .hide {
             return true
         }
         
@@ -76,27 +77,27 @@ class TileControl: UIButton {
     }
     
     func setMine(chance: Float) {
-        if tileModel.isMineTile() {
+        if _tileModel.isMine {
             return
         }
         
         if arc4random_uniform(UInt32(chance)) == 0 {
-            tileModel.setMine(true)
-            tileModel.setState(.hide)
+            _tileModel.isMine = true
+            _tileModel.state = .hide
             updateImage()
-            print("Mine: ", tileModel.getPos())
+            print("Mine: ", _tileModel.pos)
         }
     }
     
     func end() {
-        guard var imageName = tileModel.getImageName() else {
+        guard var imageName = _tileModel.imageName else {
             print("Image is not defined")
             return
         }
         
-        if tileModel.isMineTile() && tileModel.getState() != .exploded {
-            print(tileModel.getState())
-            if tileModel.getState() == .flagged {
+        if _tileModel.isMine && _tileModel.state != .exploded {
+            print(_tileModel.state)
+            if _tileModel.state == .flagged {
                 imageName.append("bomb")
                 print(imageName)
             }

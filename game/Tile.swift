@@ -16,81 +16,70 @@ class Tile {
         case exploded
     }
 
-    private var imageName: [State: String] = [.hide: "hidden", .opened: "opened", .flagged: "flagged", .marked: "marked", .exploded: "exploded"]
+    private var _imageName: [State: String] = [.hide: "hidden", .opened: "opened", .flagged: "flagged", .marked: "marked", .exploded: "exploded"]
     
-    private var y: Int
-    private var x: Int
+    private var _y: Int
+    private var _x: Int
     
-    private var mineCounter: Int
-    private var state: State
-    private var isMine: Bool
+    private var _mineCounter: Int
+    private var _state: State
+    private var _isMine: Bool
     var isOpened: Bool
     
     init(_ x: Int, _ y: Int) {
-        self.y = y
-        self.x = x
+        self._y = y
+        self._x = x
         
-        self.mineCounter = 0
-        self.isMine = false
+        self._mineCounter = 0
+        self._isMine = false
         self.isOpened = false
-        self.state = .hide
+        self._state = .hide
     }
     
     init() {
-        self.x = 0
-        self.y = 0
+        self._x = 0
+        self._y = 0
         
-        self.mineCounter = 0
-        self.isMine = false
+        self._mineCounter = 0
+        self._isMine = false
         self.isOpened = false
-        self.state = .hide
+        self._state = .hide
     }
     
-    func getX() -> Int {
-        return self.x
+    var x: Int {
+        set { _x = newValue }
+        get { return _x }
     }
     
-    func setX(_ x: Int) {
-        self.x = x < 0 ? -1 : x
+    var y: Int {
+        set { _y = newValue }
+        get { return _y }
     }
     
-    func getY() -> Int {
-        return self.y
-    }
-    
-    func setY(_ y: Int) {
-        self.y = y < 0 ? -1 : y
-    }
-    
-    func getMineCounter() -> Int {
-        return mineCounter
+    var mineCounter: Int {
+        get { return _mineCounter }
     }
     
     func increaseMineCounter(by: Int) {
-        if isMine {
+        if _isMine {
             return
         }
         if by < 0 {
             return
         }
-        self.mineCounter += 1
+        self._mineCounter += by
     }
     
-    func getState() -> State {
-        return self.state
+    var state: State {
+        set { _state = newValue }
+        get { return _state }
     }
     
-    func setState(_ state: State) {
-        self.state = state
+    var isMine: Bool {
+        set { _isMine = newValue }
+        get { return _isMine }
     }
     
-    func setMine(_ value: Bool) {
-        self.isMine = value
-    }
-    
-    func isMineTile() -> Bool {
-        return self.isMine
-    }
     
     func touch(touchMode: BoardModel.TouchMode) {
         switch touchMode {
@@ -102,43 +91,45 @@ class Tile {
     }
     
     private func openTile() {
-        if state == .hide {
-            if (isMine) {
-                state = .exploded
+        if _state == .hide {
+            if (_isMine) {
+                _state = .exploded
             }
             else {
-                state = .opened
+                _state = .opened
             }
         }
     }
     
     private func flagTile() {
-        switch state {
+        switch _state {
         case .hide:
-            state = .flagged
+            _state = .flagged
         case .flagged:
-            state = .marked
+            _state = .marked
         case .marked:
-            state = .hide
+            _state = .hide
         default:
             break
         }
     }
     
-    func getImageName() -> String? {
-        if var imageName = imageName[state] {
-            if state == .opened {
-                imageName.append("\(mineCounter)")
+    var imageName: String? {
+        get {
+            if var imageName = _imageName[_state] {
+                if _state == .opened {
+                    imageName.append("\(_mineCounter)")
+                }
+                return imageName
             }
-            return imageName
-        }
-        else {
-            return nil
+            else {
+                return nil
+            }
         }
     }
     
     // Need a Postition class for better using
-    func getPos() -> String {
-        return "(\(x), \(y))"
+    var pos: String {
+        get { return "(\(_x), \(_y))" }
     }
 }
