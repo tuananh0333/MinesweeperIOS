@@ -32,6 +32,11 @@ class BoardModel {
     private var _flaggedTiles = 0
     private var _flaggedMine = 0
     private var _tilesList: [[TileControl]] = []
+    var difficult: Difficult = .easy {
+        didSet {
+            
+        }
+    }
     
     private var _score = 0 {
         didSet {
@@ -257,11 +262,19 @@ class BoardModel {
         
         for x in 0 ..< _cols {
             for y in 0 ..< _rows {
+<<<<<<< HEAD
                 if let currentTile = getTileAt(x, y) {
                     if currentTile.getTileModel().isMine {
                         currentTile.end()
                     }
+=======
+                if (getTileAt(x, y)?.getTileModel().isMineTile())! {
+                    getTileAt(x, y)?.end()
+>>>>>>> 065f621ccb4cf59701fd00d5e5cc97e1caee2f3a
                 }
+//                if _tilesList[x][y].getTileModel().isMineTile() {
+//                    _tilesList[x][y].end()
+//                    _tilesList[x][y].setImage()
             }
         }
     }

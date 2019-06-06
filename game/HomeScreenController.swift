@@ -9,26 +9,52 @@
 //import Foundation
 import UIKit
 
-class HomeScreenController: UIViewController {
+class HomeScreenController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
     
-    var isSound:Bool = true{
+    
+    
+    var isSound = false {
         didSet {
             if isSound {
-                imgSound.image = UIImage(named: "soundon")
+                btnSound.setImage(UIImage(named: "soundon"), for: .normal)
             } else {
-                imgSound.image = UIImage(named: "soundoff")
+                btnSound.setImage(UIImage(named: "soundoff"), for: .normal)
             }
         }
     }
     
-//    init() {
-//        isSound = false
-//    }
+    @IBOutlet weak var pkvDifficult: UIPickerView!
+    @IBOutlet weak var btnSound: UIButton!
     
-    @IBOutlet weak var imgSound: UIImageView!
+    let gradePickerValues = ["Easy", "Medium", "Hard"]
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return gradePickerValues.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return gradePickerValues[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch row {
+        case 0:
+            BoardModel.shareInstance.difficult = .easy
+        case 1:
+            BoardModel.shareInstance.difficult = .normal
+        case 2:
+            BoardModel.shareInstance.difficult = .hard
+        default:
+            break
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pkvDifficult.dataSource = self
+        pkvDifficult.delegate = self
+        pkvDifficult.isHidden = false
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -36,7 +62,7 @@ class HomeScreenController: UIViewController {
     }
     @IBAction func btnScore(_ sender: UIButton) {
     }
-    @IBAction func SwSound(_ sender: UISwitch) {
+    @IBAction func btnSound(_ sender: UIButton) {
         isSound = !isSound
     }
     override func didReceiveMemoryWarning() {

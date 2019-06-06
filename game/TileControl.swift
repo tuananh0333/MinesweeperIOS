@@ -54,8 +54,12 @@ class TileControl: UIButton {
     }
     
     func touchTile(touchMode: BoardModel.TouchMode) {
+<<<<<<< HEAD
         _tileModel.touch(touchMode: touchMode)
         
+=======
+        tileModel.touch(touchMode: touchMode)
+>>>>>>> 065f621ccb4cf59701fd00d5e5cc97e1caee2f3a
         updateImage()
         
         if _tileModel.state == .opened && !_tileModel.isOpened {
@@ -85,6 +89,7 @@ class TileControl: UIButton {
             _tileModel.isMine = true
             _tileModel.state = .hide
             updateImage()
+            print("Mine: ", tileModel.getPos())
         }
     }
     
@@ -106,6 +111,7 @@ class TileControl: UIButton {
         }
         
         if let image = UIImage(named: imageName) {
+            self.setBackgroundImage(image, for: .normal)
             self.setImage(image, for: .normal)
         }
         else {

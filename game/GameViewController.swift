@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var lblScore: UILabel!
     @IBOutlet weak var btnFlagOutlet: UIButton!
     
+    
+    
     var board: BoardModel = BoardModel.shareInstance
     
     override func viewDidLoad() {
