@@ -27,12 +27,12 @@ class TileControl: UIButton {
         
         if let image = UIImage(named: imageName) {
             if self.tileModel.getState() == .flagged || self.tileModel.getState() == .marked {
-                setBackgroundImage(UIImage(named: "hidden"), for: .normal)
-                setImage(image, for: .normal)
+                self.setBackgroundImage(UIImage(named: "hidden"), for: .normal)
+                self.setImage(image, for: .normal)
             }
             else {
-                setBackgroundImage(image, for: .normal)
-                setImage(UIImage(named: "emptyImage"), for: .normal)
+                self.setBackgroundImage(image, for: .normal)
+                self.setImage(UIImage(named: "emptyImage"), for: .normal)
             }
         }
         else {
@@ -94,10 +94,14 @@ class TileControl: UIButton {
             return
         }
         
-        if tileModel.isMineTile() {
+        if tileModel.isMineTile() && tileModel.getState() != .exploded {
+            print(tileModel.getState())
             if tileModel.getState() == .flagged {
                 imageName.append("bomb")
                 print(imageName)
+            }
+            else {
+                imageName = "unflaggedbomb"
             }
         }
         
