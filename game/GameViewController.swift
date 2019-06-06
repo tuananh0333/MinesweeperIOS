@@ -9,20 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    public var isOver = false {
-        didSet {
-            if(isOver) {
-                let alert = UIAlertController(title: "Game Over", message: "Back to home?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                    self.dismiss(animated: true, completion: nil)
-                }))
-                alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-    
     public var score:Int = 0{
         didSet {
             lblScore.text = String(score)

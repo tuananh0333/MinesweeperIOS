@@ -8,81 +8,90 @@
 
 import UIKit
 
-@IBDesignable class ColumnStackController: UIStackView {
-    enum TouchMode {
-        case flag
-        case normal
-    }
-    
-    var touchMode: TouchMode = .normal
-    
-    private var board = BoardModel()
-    
+class ColumnStackController: UIStackView {
     //MARK: Properties
     private var rowList = [RowStackController]()
+    private var board: BoardModel = BoardModel() {
+        didSet {
+            setupButton()
+        }
+    }
+    private var rows: Int = 16
+    private var cols: Int = 8
     
+    //MARK: Constructor
     override init(frame: CGRect) {
         super.init(frame: frame)
-        board.setupTileField()
-        setupButton()
     }
     
     required init(coder: NSCoder) {
         super.init(coder: coder)
-        board.setupTileField()
-        setupButton()
     }
-    //Tile la du lieu cua button
-    //day la khoi tao button
+    
+    func toggleFlag() {
+        board.toggleFlag()
+    }
+    
+    func setBoardSize(rows: Int, cols: Int) {
+        self.rows = rows
+        self.cols = cols
+        
+        initData()
+    }
+    
+    func initData() {
+        //MARK: Make new board model and generate data
+        board = BoardModel(rows, cols)
+    }
+    
     func setupButton() {
+        //MARK: Fresh row list
         for row in rowList {
             removeArrangedSubview(row)
             row.removeFromSuperview()
         }
         rowList.removeAll()
         
-        for x in 0..<board.rows {
-            // Create new button
+        for y in 0 ..< rows {
+            //MARK: Create new row stack
             let stkRow = RowStackController()
-            stkRow.setIndex(index: x)
-            
-            for y in 0..<board.cols {
-                // Create new button
-                let btnTile = TileControl()
-                btnTile.createTile(x: x, y: y, tileSize: CGFloat(5))
-                btnTile.setTileModel(board.tilesField[x][y])
-                
-                //config width and height attributes
-                btnTile.translatesAutoresizingMaskIntoConstraints = false
-                
-                btnTile.addTarget(self, action: #selector(ColumnStackController.tilePressed(button:)), for: .touchUpInside)
-                
-                stkRow.addTileToStackView(tile: btnTile)
+
+            for x in 0 ..< cols {
+                //MARK: Create new button at x, y
+                if let btnTile = board.getTileAt(x, y) {
+                    
+                    //config width and height attributes
+                    btnTile.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    btnTile.addTarget(self, action: #selector(touchTile(button:)), for: .touchUpInside)
+                    
+                    stkRow.addTile(btnTile)
+                }
+                else {
+                    print("Data is not completely init at!", x, ", ", y)
+                }
             }
             
             //config width and height attributes
             stkRow.translatesAutoresizingMaskIntoConstraints = false
-            //add buttons to stack view
+            
+            //add new row to colStack
             addArrangedSubview(stkRow)
-            //add the button to list
             rowList += [stkRow]
         }
     }
     
-    
-    
     //MARK: Rating actions
-    @objc func tilePressed(button: UIButton) {
+    @objc func touchTile(button: UIButton) {
+        if board.isOver {
+            //MARK: Show replay dialog
+            return
+        }
+        
         if let pressedButton = button as? TileControl {
-            if !pressedButton.pressed(touchMode: .normal) {
-                board.isOver = true
-                print("Game is over")
-                board = BoardModel()
-                board.setupTileField()
-                setupButton()
-                return
-            }
-            print(pressedButton.getTileModel().getY(), ",", pressedButton.getTileModel().getX(), "")
+            board.touch(pressedButton)
+            
+            print(pressedButton.getTileModel().getX(), ",", pressedButton.getTileModel().getY(), "")
             print("Mine around: ", pressedButton.getTileModel().getMineCounter())
         }
     }
