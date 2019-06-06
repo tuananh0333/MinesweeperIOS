@@ -55,6 +55,7 @@ class TileControl: UIButton {
     
     func touchTile(touchMode: BoardModel.TouchMode) {
         tileModel.touch(touchMode: touchMode)
+        
         updateImage()
         
         if tileModel.getState() == .opened && !tileModel.isOpened {
@@ -84,7 +85,6 @@ class TileControl: UIButton {
             tileModel.setMine(true)
             tileModel.setState(.hide)
             updateImage()
-            print("Mine: ", tileModel.getPos())
         }
     }
     
@@ -94,7 +94,8 @@ class TileControl: UIButton {
             return
         }
         
-        if tileModel.isMineTile() {
+        if tileModel.isMineTile() && tileModel.getState() != .exploded {
+            print(tileModel.getState())
             if tileModel.getState() == .flagged {
                 imageName.append("bomb")
                 print(imageName)
@@ -105,7 +106,7 @@ class TileControl: UIButton {
         }
         
         if let image = UIImage(named: imageName) {
-            self.setBackgroundImage(image, for: .normal)
+            self.setImage(image, for: .normal)
         }
         else {
             print("Image is not found")

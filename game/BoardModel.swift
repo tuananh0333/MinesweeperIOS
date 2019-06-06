@@ -257,9 +257,10 @@ class BoardModel {
         
         for x in 0 ..< _cols {
             for y in 0 ..< _rows {
-                if _tilesList[x][y].getTileModel().isMineTile() {
-                    _tilesList[x][y].end()
-//                    _tilesList[x][y].setImage()
+                if let currentTile = getTileAt(x, y) {
+                    if currentTile.getTileModel().isMineTile() {
+                        currentTile.end()
+                    }
                 }
             }
         }
