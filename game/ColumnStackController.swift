@@ -31,16 +31,11 @@ class ColumnStackController: UIStackView {
         
         board.setBoardSize(rows: rows, cols: cols)
         
-        setupButton()
+        setupButton() 
     }
     
     func setupButton() {
-        //MARK: Fresh row list
-        for row in rowList {
-            removeArrangedSubview(row)
-            row.removeFromSuperview()
-        }
-        rowList.removeAll()
+        resetRowList()
         
         for y in 0 ..< rows {
             //MARK: Create new row stack
@@ -70,9 +65,22 @@ class ColumnStackController: UIStackView {
             rowList += [stkRow]
         }
     }
+    
+    func resetRowList() {
+        for row in rowList {
+            removeArrangedSubview(row)
+            row.removeFromSuperview()
+        }
+        rowList.removeAll()
+    }
+    
     //MARK: Rating actions
     @objc func touchTile(button: UIButton) {
         if let pressedButton = button as? TileControl {
+            if board.gameState != .playing {
+                return
+            }
+            
             board.touch(pressedButton)
             
             print(pressedButton.getTileModel().getX(), ",", pressedButton.getTileModel().getY(), "")

@@ -13,21 +13,10 @@ class Tile {
         case opened
         case flagged
         case marked
-        case flagging
         case exploded
     }
 
-    enum Trigger {
-        case openTile
-        case flagTile
-    }
-
-    private var imageName: [State: String] = [.hide: "hidden",
-                                             .opened: "opened",
-                                             .flagged: "flagged",
-                                             .marked: "marked",
-                                             .flagging: "flagging",
-                                             .exploded: "exploded"]
+    private var imageName: [State: String] = [.hide: "hidden", .opened: "opened", .flagged: "flagged", .marked: "marked", .exploded: "exploded"]
     
     private var y: Int
     private var x: Int
@@ -100,15 +89,13 @@ class Tile {
         return self.isMine
     }
     
-    func touch(touchMode: BoardModel.TouchMode) -> State {
+    func touch(touchMode: BoardModel.TouchMode) {
         switch touchMode {
         case .flag:
             flagTile()
         case .normal:
             openTile()
         }
-
-        return state
     }
     
     private func openTile() {
@@ -130,25 +117,25 @@ class Tile {
             state = .marked
         case .marked:
             state = .hide
-        case .opened:
-            break
-        case .flagging:
-            break
-        case .exploded:
+        default:
             break
         }
     }
     
     func getImageName() -> String? {
-        if let imageName = imageName[state] {
-            return imageName + (state == .opened ? getChildImage() : "")
+        if var imageName = imageName[state] {
+            if state == .opened {
+                imageName.append("\(mineCounter)")
+            }
+            return imageName
         }
         else {
             return nil
         }
     }
     
-    private func getChildImage() -> String {
-        return mineCounter == 0 ? "" : mineCounter.description
+    // Need a Postition class for better using
+    func getPos() -> String {
+        return "(\(x), \(y))"
     }
 }
