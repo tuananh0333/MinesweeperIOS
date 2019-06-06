@@ -11,6 +11,28 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--How to play-->
+        <scene sceneID="pRw-Ec-0VU">
+            <objects>
+                <viewController id="HRG-Kr-Bfm" customClass="HowToPlayViewController" customModule="game" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CyC-O3-Dhk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="2tP-UM-c6R"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="How to play" id="agE-HN-ARO">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="QWN-zJ-eDT">
+                            <connections>
+                                <action selector="btnBack:" destination="HRG-Kr-Bfm" id="gPU-mh-vdU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Yh-yM-5Vy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1879" y="1789"/>
+        </scene>
         <!--Home Screen Controller-->
         <scene sceneID="eb8-1P-hn1">
             <objects>
@@ -36,7 +58,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="btnScore:" destination="eUe-Xw-NVd" eventType="touchUpInside" id="OjS-HD-dgw"/>
                                     <segue destination="wBS-nE-5jW" kind="showDetail" id="fpL-og-6Xc"/>
                                 </connections>
                             </button>
@@ -57,14 +78,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="btnNewGame:" destination="eUe-Xw-NVd" eventType="touchUpInside" id="Jhk-aC-ObC"/>
                                     <segue destination="BYZ-38-t0r" kind="show" id="e33-rN-8Y6"/>
                                 </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXz-Zx-HJ8">
-                                <rect key="frame" x="125" y="145" width="125" height="160"/>
+                                <rect key="frame" x="109.5" y="157.5" width="156" height="156"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="160" id="g0p-kx-b14"/>
+                                    <constraint firstAttribute="width" secondItem="CXz-Zx-HJ8" secondAttribute="height" multiplier="1:1" id="256-Cc-scX"/>
                                 </constraints>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dz4-K6-ZOo" customClass="RoundButton" customModule="game" customModuleProvider="target">
@@ -82,6 +102,9 @@
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="BDI-bs-4hf" kind="showDetail" id="NPk-XU-icv"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eyx-BX-DZs" customClass="RoundButton" customModule="game" customModuleProvider="target">
                                 <rect key="frame" x="247" y="577" width="99" height="30"/>
@@ -93,36 +116,48 @@
                                 <state key="normal" title="About Us">
                                     <color key="titleColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="5Ht-fa-IwR" kind="showDetail" id="a9y-em-WlG"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBl-Mt-BmC">
-                                <rect key="frame" x="24" y="577" width="80" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBl-Mt-BmC">
+                                <rect key="frame" x="25" y="597" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="dcW-JZ-tEI"/>
+                                    <constraint firstAttribute="width" constant="50" id="ytW-mN-tOh"/>
+                                </constraints>
                                 <state key="normal" title="Button" image="soundoff"/>
+                                <connections>
+                                    <action selector="btnSound:" destination="eUe-Xw-NVd" eventType="touchUpInside" id="Uvo-AH-zr6"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="FgY-Hn-ANW" firstAttribute="bottom" secondItem="Dz4-K6-ZOo" secondAttribute="bottom" constant="20" id="7yj-8w-949"/>
-                            <constraint firstItem="c72-mJ-02N" firstAttribute="top" secondItem="CXz-Zx-HJ8" secondAttribute="bottom" constant="8" id="8n4-hY-lkU"/>
                             <constraint firstItem="c72-mJ-02N" firstAttribute="centerY" secondItem="Xdc-eZ-Vv3" secondAttribute="centerY" id="AV6-cm-7PW"/>
                             <constraint firstItem="v0n-2h-o7P" firstAttribute="centerX" secondItem="Xdc-eZ-Vv3" secondAttribute="centerX" id="EmB-c2-Blp"/>
                             <constraint firstItem="FgY-Hn-ANW" firstAttribute="trailing" secondItem="Eyx-BX-DZs" secondAttribute="trailing" constant="29" id="I0V-z0-Vg1"/>
+                            <constraint firstItem="CXz-Zx-HJ8" firstAttribute="width" secondItem="c72-mJ-02N" secondAttribute="width" id="KKr-p0-4uF"/>
                             <constraint firstItem="Dz4-K6-ZOo" firstAttribute="top" secondItem="Eyx-BX-DZs" secondAttribute="bottom" constant="10" id="LRj-IV-FK6"/>
                             <constraint firstItem="v0n-2h-o7P" firstAttribute="top" secondItem="c72-mJ-02N" secondAttribute="bottom" constant="35" id="QoL-Sz-JKh"/>
-                            <constraint firstItem="CXz-Zx-HJ8" firstAttribute="centerX" secondItem="Xdc-eZ-Vv3" secondAttribute="centerX" id="RaT-K8-4HL"/>
+                            <constraint firstItem="FgY-Hn-ANW" firstAttribute="bottom" secondItem="SBl-Mt-BmC" secondAttribute="bottom" constant="20" id="TwA-3R-PQr"/>
                             <constraint firstItem="FgY-Hn-ANW" firstAttribute="trailing" secondItem="Dz4-K6-ZOo" secondAttribute="trailing" constant="15" id="gIP-yo-YBT"/>
+                            <constraint firstItem="SBl-Mt-BmC" firstAttribute="leading" secondItem="FgY-Hn-ANW" secondAttribute="leading" constant="25" id="qfs-v2-eC3"/>
                             <constraint firstItem="c72-mJ-02N" firstAttribute="centerX" secondItem="Xdc-eZ-Vv3" secondAttribute="centerX" id="xI5-q7-GKS"/>
-                            <constraint firstItem="CXz-Zx-HJ8" firstAttribute="width" secondItem="Xdc-eZ-Vv3" secondAttribute="width" multiplier="1/3" id="zJM-XR-ad1"/>
+                            <constraint firstItem="CXz-Zx-HJ8" firstAttribute="centerX" secondItem="Xdc-eZ-Vv3" secondAttribute="centerX" id="ydR-EA-ZD7"/>
+                            <constraint firstItem="c72-mJ-02N" firstAttribute="top" secondItem="CXz-Zx-HJ8" secondAttribute="bottom" id="zKa-Qb-RZo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FgY-Hn-ANW"/>
                     </view>
                     <connections>
+                        <outlet property="btnSound" destination="SBl-Mt-BmC" id="uck-d7-QIN"/>
                         <outlet property="pkvDifficult" destination="CXz-Zx-HJ8" id="gru-jo-pwo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eyf-wt-bhN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4" y="133.5832083958021"/>
+            <point key="canvasLocation" x="682.39999999999998" y="133.5832083958021"/>
         </scene>
         <!--Score-->
         <scene sceneID="QbY-pS-1B4">
@@ -158,7 +193,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Poe-2d-7Ab" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationItem title="Title" id="vYd-uc-q8g"/>
             </objects>
-            <point key="canvasLocation" x="4" y="922"/>
+            <point key="canvasLocation" x="2884" y="349"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -244,7 +279,29 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="830" y="289"/>
+            <point key="canvasLocation" x="2010" y="-338"/>
+        </scene>
+        <!--About Us-->
+        <scene sceneID="fcE-1x-Fel">
+            <objects>
+                <viewController id="qpu-sF-EHf" customClass="AboutUsViewController" customModule="game" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XeE-fA-sbn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="7Ar-81-yXn"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="About Us" id="lJc-7Y-eyX">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="hWQ-GO-5BJ">
+                            <connections>
+                                <action selector="btnBack:" destination="qpu-sF-EHf" id="kxn-5N-Ljg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kMM-Kn-siR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-516" y="1789"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="svY-O1-D9I">
@@ -262,7 +319,43 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QfZ-1x-jYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-793" y="783"/>
+            <point key="canvasLocation" x="2036" y="561"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Mot-s3-s9n">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5Ht-fa-IwR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hck-jg-2fw">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qpu-sF-EHf" kind="relationship" relationship="rootViewController" id="fI1-Hy-52J"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3jl-VP-Ocy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="84" y="968"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="JqX-P7-AHM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BDI-bs-4hf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AiW-iS-FBf">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HRG-Kr-Bfm" kind="relationship" relationship="rootViewController" id="X9F-Ze-UfU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mWV-xS-R16" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1167" y="969"/>
         </scene>
     </scenes>
     <resources>

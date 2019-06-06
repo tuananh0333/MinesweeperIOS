@@ -32,6 +32,11 @@ class BoardModel {
     private var _flaggedTiles = 0
     private var _flaggedMine = 0
     private var _tilesList: [[TileControl]] = []
+    var difficult: Difficult = .easy {
+        didSet {
+            
+        }
+    }
     
     private var _score = 0 {
         didSet {
