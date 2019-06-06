@@ -25,15 +25,15 @@ class ViewController: UIViewController {
     }
     
     func callback() {
-        GameModel.shareInstance.scoreUpdate = {
+        BoardModel.shareInstance.scoreUpdate = {
             [weak self] (score: Int) in self?.updateScore(score)
         }
 
-        GameModel.shareInstance.touchModeUpdate = {
-            [weak self] (touchMode: GameModel.TouchMode) in self?.toggleFlagButton(touchMode)
+        BoardModel.shareInstance.touchModeUpdate = {
+            [weak self] (touchMode: BoardModel.TouchMode) in self?.toggleFlagButton(touchMode)
         }
         
-        GameModel.shareInstance.isOver = {
+        BoardModel.shareInstance.isOver = {
             [weak self] (state: Bool) in self?.isOver(state)
         }
     }
@@ -42,8 +42,8 @@ class ViewController: UIViewController {
         lblScore.text = String(score)
     }
         
-    func toggleFlagButton(_ touchMode: GameModel.TouchMode) {
-        guard let imageName = GameModel.shareInstance.flagImage[touchMode] else {
+    func toggleFlagButton(_ touchMode: BoardModel.TouchMode) {
+        guard let imageName = BoardModel.shareInstance.flagImage[touchMode] else {
             print("Image not found")
             return
         }
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
 
     @IBAction func btnFlag(_ sender: UIButton) {
         //FIXIT: Cai nay chi can callback tu datamodel la duoc
-        GameModel.shareInstance.toggleFlag()
+        BoardModel.shareInstance.toggleFlag()
     }
     
     override func didReceiveMemoryWarning() {

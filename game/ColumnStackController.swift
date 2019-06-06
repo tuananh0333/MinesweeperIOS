@@ -26,7 +26,7 @@ private let board: BoardModel = BoardModel()
     }
     
     func toggleFlag() {
-        GameModel.shareInstance.toggleFlag()
+        BoardModel.shareInstance.toggleFlag()
     }
     
     func setBoardSize(rows: Int, cols: Int) {
@@ -76,11 +76,6 @@ private let board: BoardModel = BoardModel()
     }
     //MARK: Rating actions
     @objc func touchTile(button: UIButton) {
-        if board.isOver {
-            //MARK: Show replay dialog
-            return
-        }
-        
         if let pressedButton = button as? TileControl {
             board.touch(pressedButton)
             
