@@ -130,7 +130,7 @@ class BoardModel {
                 for y in 0 ..< _rows {
                     let selectedTile = _tilesList[x][y]
                     selectedTile.setMine(chance: 5)
-                    if selectedTile.getTileModel().isMineTile() {
+                    if selectedTile.getTileModel().isMine {
                         _minesAmount += 1
                     }
                 }
@@ -143,14 +143,14 @@ class BoardModel {
     // - there is no tile near it
     // If there is a mine tile near it: increase it's mine counter
     func countMinesAround(tile: TileControl) {
-        if tile.getTileModel().isMineTile() {
+        if tile.getTileModel().isMine {
             return
         }
         
         let nearbyTiles: [TileControl] = getNearbyTiles(of: tile)
         
         for nearbyTile in nearbyTiles {
-            if (nearbyTile.getTileModel().isMineTile()) {
+            if (nearbyTile.getTileModel().isMine) {
                 tile.getTileModel().increaseMineCounter(by: 1)
             }
         }
@@ -160,7 +160,7 @@ class BoardModel {
         var nearbyTiles: [TileControl] = []
         
         for (rowOffset, colOffset) in _nearbyTileOffset {
-            if let nearbyTile = getTileAt(of.getTileModel().getX() + rowOffset, of.getTileModel().getY() + colOffset) {
+            if let nearbyTile = getTileAt(of.getTileModel().x + rowOffset, of.getTileModel().y + colOffset) {
                 nearbyTiles.append(nearbyTile)
             }
         }
@@ -183,24 +183,24 @@ class BoardModel {
     // This function is too big
     func touch(_ tile: TileControl) {
         // Check if reach maximum flag and mark
-        if touchMode == .flag && _flaggedTiles == _minesAmount && tile.getTileModel().getState() == .hide {
+        if touchMode == .flag && _flaggedTiles == _minesAmount && tile.getTileModel().state == .hide {
             print("You have reach maximum flagged")
             return
         }
         
         tile.touchTile(touchMode: touchMode)
         
-        let state = tile.getTileModel().getState()
+        let state = tile.getTileModel().state
         
         switch state {
         case .opened:
             // Expand if no mine around
-            if tile.getTileModel().getMineCounter() <= 0 {
+            if tile.getTileModel().mineCounter <= 0 {
                 let nearbyTiles = getNearbyTiles(of: tile)
                 
                 for nearbyTile in nearbyTiles {
                     // Countinue expand if nearby tile is touchable and has no mine around it
-                    if nearbyTile.isTouchable() && nearbyTile.getTileModel().getMineCounter() == 0 {
+                    if nearbyTile.isTouchable() && nearbyTile.getTileModel().mineCounter == 0 {
                         touch(nearbyTile)
                     }
                     else {
@@ -218,13 +218,13 @@ class BoardModel {
         case .flagged:
             _flaggedTiles += 1
             
-            if tile.getTileModel().isMineTile() {
+            if tile.getTileModel().isMine {
                 _flaggedMine += 1
             }
         case .marked:
             _flaggedTiles -= 1
             
-            if tile.getTileModel().isMineTile() {
+            if tile.getTileModel().isMine {
                 _flaggedMine -= 1
             }
         default:
@@ -258,7 +258,7 @@ class BoardModel {
         for x in 0 ..< _cols {
             for y in 0 ..< _rows {
                 if let currentTile = getTileAt(x, y) {
-                    if currentTile.getTileModel().isMineTile() {
+                    if currentTile.getTileModel().isMine {
                         currentTile.end()
                     }
                 }
