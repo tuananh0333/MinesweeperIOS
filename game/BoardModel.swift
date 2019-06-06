@@ -210,7 +210,7 @@ class BoardModel {
             
             // Increase score
             _openedTiles += 1
-            score += tile.getTileModel().getMineCounter() * 2
+            print(score)
             
         case .exploded:
             gameOver()
@@ -253,5 +253,13 @@ class BoardModel {
     func gameOver() {
         gameState = .over
         score += _flaggedMine * 5
+        
+        for x in 0 ..< _cols {
+            for y in 0 ..< _rows {
+                if _tilesList[x][y].getTileModel().isMineTile() {
+                    _tilesList[x][y].end()
+                }
+            }
+        }
     }
 }

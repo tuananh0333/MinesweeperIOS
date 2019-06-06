@@ -21,9 +21,10 @@ class TileControl: UIButton {
     
     func setImage() {
         guard let imageName = tileModel.getImageName() else {
-            print("Image name is not define")
+            print("Image is not defined")
             return
         }
+        
         if let image = UIImage(named: imageName) {
             setBackgroundImage(image, for: .normal)
         }
@@ -48,16 +49,17 @@ class TileControl: UIButton {
     func touchTile(touchMode: BoardModel.TouchMode) {
         tileModel.touch(touchMode: touchMode)
         setImage()
+        
+        if tileModel.getState() == .opened && !tileModel.isOpened {
+            BoardModel.shareInstance.score += tileModel.getMineCounter() * 2
+            tileModel.isOpened = true
+        }
     }
 
     // Tile button is touchable if:
     // - game is not win or over
     // - state of tile is hide (or untouched)
     func isTouchable() -> Bool {
-//        if BoardModel.shareInstance.gameState == .playing {
-//            return true
-//        }
-//        
         if tileModel.getState() == .hide {
             return true
         }
@@ -75,6 +77,27 @@ class TileControl: UIButton {
             tileModel.setState(.marked)
             setImage()
             print("Mine: ", tileModel.getPos())
+        }
+    }
+    
+    func end() {
+        guard var imageName = tileModel.getImageName() else {
+            print("Image is not defined")
+            return
+        }
+        
+        if tileModel.isMineTile() {
+            if tileModel.getState() == .flagged {
+                imageName.append("ended")
+            }
+        }
+        
+        if let image = UIImage(named: imageName) {
+            setBackgroundImage(image, for: .normal)
+        }
+        else {
+            print("Image is not found")
+            return
         }
     }
 }
