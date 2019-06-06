@@ -35,6 +35,10 @@ class ViewController: UIViewController {
             [weak self] (score: Int) in self?.updateScore(score)
         }
         
+        BoardModel.shareInstance.flaggedTilesChanged = {
+            [weak self] (tilesCount: Int) in self?.flagTilesChanged(tilesCount)
+        }
+        
         BoardModel.shareInstance.isOver = {
             [weak self] (state: BoardModel.GameState) in self?.gamestateChanged(state)
         }
@@ -43,6 +47,12 @@ class ViewController: UIViewController {
     func updateScore(_ score: Int) {
         if lblScore != nil {
             lblScore.text = String(score)
+        }
+    }
+    
+    func flagTilesChanged(_ tilesCount: Int) {
+        if lblBombNumber != nil {
+            lblBombNumber.text = String(tilesCount)
         }
     }
     

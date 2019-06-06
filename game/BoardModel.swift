@@ -29,7 +29,6 @@ class BoardModel {
     private var _minesAmount = 0
     private var _maxMines = 0
     private var _openedTiles = 0
-    private var _flaggedTiles = 0
     private var _flaggedMine = 0
     private var _tilesList: [[TileControl]] = []
     var difficult: Difficult = .easy {
@@ -73,6 +72,18 @@ class BoardModel {
         }
     }
     var isOver: ((_ state: GameState) -> Void)?
+    
+    private var _flaggedTiles = 0 {
+        didSet {
+            flaggedTilesChanged?(_flaggedTiles)
+        }
+    }
+    var flaggedTiles: Int {
+        get { return _flaggedTiles }
+    }
+    var flaggedTilesChanged: ((_ tilesCount: Int) -> Void)?
+    
+    
     
     static let shareInstance = BoardModel()
     
