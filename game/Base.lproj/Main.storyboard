@@ -12,26 +12,20 @@
     </dependencies>
     <scenes>
         <!--How to play-->
-        <scene sceneID="pRw-Ec-0VU">
+        <scene sceneID="X58-gm-8sU">
             <objects>
-                <viewController id="HRG-Kr-Bfm" customClass="HowToPlayViewController" customModule="game" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="CyC-O3-Dhk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="2tP-UM-c6R"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="How to play" id="agE-HN-ARO">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="QWN-zJ-eDT">
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="5MU-WE-w5s" customClass="HowToPlayViewController" customModule="game" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="How to play" id="9uA-ag-RYg">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="Yz5-Vf-bXU">
                             <connections>
-                                <action selector="btnBack:" destination="HRG-Kr-Bfm" id="gPU-mh-vdU"/>
+                                <action selector="btnBack:" destination="5MU-WE-w5s" id="Dtz-Rn-fYr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9Yh-yM-5Vy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9qj-Bb-2uC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1879" y="1789"/>
+            <point key="canvasLocation" x="1961" y="1743"/>
         </scene>
         <!--Home Screen Controller-->
         <scene sceneID="eb8-1P-hn1">
@@ -82,9 +76,9 @@
                                 </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXz-Zx-HJ8">
-                                <rect key="frame" x="109.5" y="157.5" width="156" height="156"/>
+                                <rect key="frame" x="110" y="236" width="156" height="78"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="CXz-Zx-HJ8" secondAttribute="height" multiplier="1:1" id="256-Cc-scX"/>
+                                    <constraint firstAttribute="width" secondItem="CXz-Zx-HJ8" secondAttribute="height" multiplier="1:0.5" id="256-Cc-scX"/>
                                 </constraints>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dz4-K6-ZOo" customClass="RoundButton" customModule="game" customModuleProvider="target">
@@ -103,7 +97,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="BDI-bs-4hf" kind="showDetail" id="NPk-XU-icv"/>
+                                    <segue destination="uzp-h1-byv" kind="showDetail" id="bFO-dG-fpP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eyx-BX-DZs" customClass="RoundButton" customModule="game" customModuleProvider="target">
@@ -340,22 +334,22 @@
             <point key="canvasLocation" x="84" y="968"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="JqX-P7-AHM">
+        <scene sceneID="Edg-Ve-ziM">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BDI-bs-4hf" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uzp-h1-byv" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AiW-iS-FBf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8qI-cN-LCw">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="HRG-Kr-Bfm" kind="relationship" relationship="rootViewController" id="X9F-Ze-UfU"/>
+                        <segue destination="5MU-WE-w5s" kind="relationship" relationship="rootViewController" id="XFq-Qa-N7w"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mWV-xS-R16" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qPd-E4-ttl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1167" y="969"/>
+            <point key="canvasLocation" x="1082" y="967"/>
         </scene>
     </scenes>
     <resources>

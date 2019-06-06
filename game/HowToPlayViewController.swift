@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HowToPlayViewController: UIViewController {
+class HowToPlayViewController: UIPageViewController {
 
     @IBAction func btnBack(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
