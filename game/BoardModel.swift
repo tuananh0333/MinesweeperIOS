@@ -248,7 +248,7 @@ class BoardModel {
     
     func win() {
         gameState = .win
-        score += _maxMines * 5
+        score += _flaggedMine * 5
     }
     
     func gameOver() {
@@ -259,6 +259,7 @@ class BoardModel {
             for y in 0 ..< _rows {
                 if _tilesList[x][y].getTileModel().isMineTile() {
                     _tilesList[x][y].end()
+//                    _tilesList[x][y].setImage()
                 }
             }
         }

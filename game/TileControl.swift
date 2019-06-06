@@ -60,6 +60,7 @@ class TileControl: UIButton {
         if tileModel.getState() == .opened && !tileModel.isOpened {
             BoardModel.shareInstance.score += tileModel.getMineCounter() * 2
             tileModel.isOpened = true
+            isEnabled = false
         }
     }
 
@@ -95,12 +96,13 @@ class TileControl: UIButton {
         
         if tileModel.isMineTile() {
             if tileModel.getState() == .flagged {
-                imageName.append("ended")
+                imageName.append("bomb")
+                print(imageName)
             }
         }
         
         if let image = UIImage(named: imageName) {
-            setBackgroundImage(image, for: .normal)
+            self.setBackgroundImage(image, for: .normal)
         }
         else {
             print("Image is not found")

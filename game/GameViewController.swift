@@ -61,6 +61,8 @@ class ViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+        
+        
     }
     
     @IBAction func btnBackToHome(_ sender: UIButton) {
