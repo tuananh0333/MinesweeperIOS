@@ -16,10 +16,10 @@ class TileControl: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setImage()
+        updateImage()
     }
     
-    func setImage() {
+    func updateImage() {
         guard let imageName = tileModel.getImageName() else {
             print("Image is not defined")
             return
@@ -55,7 +55,7 @@ class TileControl: UIButton {
     
     func touchTile(touchMode: BoardModel.TouchMode) {
         tileModel.touch(touchMode: touchMode)
-        setImage()
+        updateImage()
         
         if tileModel.getState() == .opened && !tileModel.isOpened {
             BoardModel.shareInstance.score += tileModel.getMineCounter() * 2
@@ -83,7 +83,7 @@ class TileControl: UIButton {
         if arc4random_uniform(UInt32(chance)) == 0 {
             tileModel.setMine(true)
             tileModel.setState(.hide)
-            setImage()
+            updateImage()
             print("Mine: ", tileModel.getPos())
         }
     }
@@ -103,6 +103,7 @@ class TileControl: UIButton {
         
         if let image = UIImage(named: imageName) {
             self.setBackgroundImage(image, for: .normal)
+            self.setImage(image, for: .normal)
         }
         else {
             print("Image is not found")

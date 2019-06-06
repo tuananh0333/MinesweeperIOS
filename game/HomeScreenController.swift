@@ -11,21 +11,13 @@ import UIKit
 
 class HomeScreenController: UIViewController {
     
-    var isSound:Bool = true{
-        didSet {
-            if isSound {
-                imgSound.image = UIImage(named: "soundon")
-            } else {
-                imgSound.image = UIImage(named: "soundoff")
-            }
-        }
-    }
+    
     
 //    init() {
 //        isSound = false
 //    }
     
-    @IBOutlet weak var imgSound: UIImageView!
+    @IBOutlet weak var pkvDifficult: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +27,6 @@ class HomeScreenController: UIViewController {
     @IBAction func btnNewGame(_ sender: UIButton) {
     }
     @IBAction func btnScore(_ sender: UIButton) {
-    }
-    @IBAction func SwSound(_ sender: UISwitch) {
-        isSound = !isSound
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
