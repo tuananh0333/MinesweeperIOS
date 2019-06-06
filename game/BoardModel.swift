@@ -180,9 +180,10 @@ class BoardModel {
         return nil
     }
 
+    // This function is too big
     func touch(_ tile: TileControl) {
         // Check if reach maximum flag and mark
-        if touchMode == .flag && _flaggedTiles == _minesAmount {
+        if touchMode == .flag && _flaggedTiles == _minesAmount && tile.getTileModel().getState() == .hide {
             print("You have reach maximum flagged")
             return
         }
