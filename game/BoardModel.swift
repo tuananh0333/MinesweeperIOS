@@ -180,9 +180,10 @@ class BoardModel {
         return nil
     }
 
+    // This function is too big
     func touch(_ tile: TileControl) {
         // Check if reach maximum flag and mark
-        if touchMode == .flag && _flaggedTiles == _minesAmount {
+        if touchMode == .flag && _flaggedTiles == _minesAmount && tile.getTileModel().getState() == .hide {
             print("You have reach maximum flagged")
             return
         }
@@ -210,7 +211,7 @@ class BoardModel {
             
             // Increase score
             _openedTiles += 1
-            score += tile.getTileModel().getMineCounter() * 2
+            print(score)
             
         case .exploded:
             gameOver()
@@ -253,5 +254,13 @@ class BoardModel {
     func gameOver() {
         gameState = .over
         score += _flaggedMine * 5
+        
+        for x in 0 ..< _cols {
+            for y in 0 ..< _rows {
+                if _tilesList[x][y].getTileModel().isMineTile() {
+                    _tilesList[x][y].end()
+                }
+            }
+        }
     }
 }
