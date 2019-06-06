@@ -12,6 +12,15 @@ class BoardModel {
         case square
         case plus
     }
+    enum TouchMode {
+        case flag
+        case normal
+    }
+    enum Difficult {
+        case easy
+        case normal
+        case hard
+    }
     
     //MARK: Fields
     private var _rows: Int = 16
@@ -22,8 +31,50 @@ class BoardModel {
     private var _flaggedTiles = 0
     private var _flaggedMine = 0
     private var _tilesField: [[TileControl]] = []
-    var isOver: Bool = false
     
+    private var _score = 0 {
+        didSet {
+            scoreUpdate?(_score)
+        }
+    }
+    var score: Int {
+        set { _score = newValue }
+        get { return _score }
+    }
+    var scoreUpdate: ((_ score: Int) -> Void)?
+    
+    private var _touchMode: TouchMode = .normal {
+        didSet {
+            touchModeUpdate?(_touchMode)
+        }
+    }
+    var touchMode: TouchMode {
+        get { return _touchMode }
+    }
+    var touchModeUpdate: ((_ mode: TouchMode) -> Void)?
+    func toggleFlag() {
+        if _touchMode == .normal {
+            _touchMode = .flag
+        }
+        else {
+            _touchMode = .normal
+        }
+    }
+    
+    //TODO: Tao 1 enum chua cac state cua game
+    var gameState: Bool = false {
+        didSet {
+            isOver?(gameState)
+        }
+    }
+    var isOver: ((_ state: Bool) -> Void)?
+    
+    static let shareInstance = BoardModel()
+    
+    var difficultMaxMine: [Difficult: Int] = [.easy: 10,
+                                              .normal: 8,
+                                              .hard: 5]
+    var flagImage: [TouchMode: String] = [.normal: "flagging", .flag: "flagged"]
     private var _nearbyTileOffset: [NearbyTileFilterType: [(Int, Int)]] = [.plus: [(0, -1), (-1, 0), (1, 0), (0, 1)],
                                                                            .square: [(-1, -1), (0, -1), (1, -1),
                                                                                      (-1, 0), (1, 0),
@@ -32,7 +83,9 @@ class BoardModel {
     init() {
         _maxMines = 0
         _minesAmount = 0
-        isOver = false
+        gameState = false
+        _touchMode = .normal
+        _score = 0
         
         setupTileField()
     }
@@ -43,7 +96,7 @@ class BoardModel {
 
         _maxMines = 0
         _minesAmount = 0
-        isOver = false
+        gameState = false
         
         setupTileField()
     }
@@ -160,9 +213,7 @@ class BoardModel {
             print("You win")
             return
         }
-        
-        let touchMode = GameModel.shareInstance.touchMode
-        
+
         if touchMode == .flag && _flaggedTiles == _minesAmount {
             print("You have reach maximum flagged")
             return
@@ -183,11 +234,11 @@ class BoardModel {
                 }
             }
             _openedTiles += 1
-            GameModel.shareInstance.score += tile.getTileModel().getMineCounter() * 2
+            score += tile.getTileModel().getMineCounter() * 2
             
         case .exploded:
             gameOver()
-            isOver = true
+            gameState = true
         case .flagged:
             _flaggedTiles += 1
             
@@ -218,10 +269,10 @@ class BoardModel {
     }
     
     func win() {
-        GameModel.shareInstance.score += _maxMines * 5
+        score += _maxMines * 5
     }
     
     func gameOver() {
-        GameModel.shareInstance.score += _flaggedMine * 5
+        score += _flaggedMine * 5
     }
 }
