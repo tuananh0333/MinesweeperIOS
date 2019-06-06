@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     }
 
     func updateScore(_ score: Int) {
-//        lblScore.text = String(score)
+        lblScore.text = String(score)
     }
     
     func gamestateChanged(_ state: BoardModel.GameState) {

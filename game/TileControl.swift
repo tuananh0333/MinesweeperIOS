@@ -25,7 +25,14 @@ class TileControl: UIButton {
             return
         }
         if let image = UIImage(named: imageName) {
-            setBackgroundImage(image, for: .normal)
+            if self.tileModel.getState() == .flagged || self.tileModel.getState() == .marked {
+                setBackgroundImage(UIImage(named: "hidden"), for: .normal)
+                setImage(image, for: .normal)
+            }
+            else {
+                setBackgroundImage(image, for: .normal)
+                setImage(UIImage(named: "emptyImage"), for: .normal)
+            }
         }
         else {
             print("Image is not found")
@@ -72,7 +79,7 @@ class TileControl: UIButton {
         
         if arc4random_uniform(UInt32(chance)) == 0 {
             tileModel.setMine(true)
-            tileModel.setState(.marked)
+            tileModel.setState(.hide)
             setImage()
             print("Mine: ", tileModel.getPos())
         }
