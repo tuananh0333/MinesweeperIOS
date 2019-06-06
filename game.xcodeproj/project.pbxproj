@@ -22,7 +22,6 @@
 		596E46C022A2C58A00DD08FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596E46BE22A2C58A00DD08FA /* LaunchScreen.storyboard */; };
 		596E46CB22A2C58A00DD08FA /* gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E46CA22A2C58A00DD08FA /* gameTests.swift */; };
 		59B9DD2622A7A7B6000EF01D /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B9DD2522A7A7B6000EF01D /* AlertController.swift */; };
-		59DDAE0822A89EDE00B31939 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DDAE0722A89EDE00B31939 /* GameModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +54,6 @@
 		596E46CA22A2C58A00DD08FA /* gameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameTests.swift; sourceTree = "<group>"; };
 		596E46CC22A2C58B00DD08FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59B9DD2522A7A7B6000EF01D /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
-		59DDAE0722A89EDE00B31939 /* GameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +95,6 @@
 		596E46B422A2C58A00DD08FA /* game */ = {
 			isa = PBXGroup;
 			children = (
-				59DDAE0722A89EDE00B31939 /* GameModel.swift */,
 				59010C3122A56E6A00D34B69 /* BoardModel.swift */,
 				591E2CE522A3AE8C00B364F3 /* Tile.swift */,
 				591E2CE622A3AE8C00B364F3 /* TileControl.swift */,
@@ -234,7 +231,6 @@
 				596E46B822A2C58A00DD08FA /* GameViewController.swift in Sources */,
 				591E2CE822A3AE8C00B364F3 /* TileControl.swift in Sources */,
 				591E2CE722A3AE8C00B364F3 /* Tile.swift in Sources */,
-				59DDAE0822A89EDE00B31939 /* GameModel.swift in Sources */,
 				591E2CE022A385FD00B364F3 /* HomeScreenController.swift in Sources */,
 				59010C3222A56E6A00D34B69 /* BoardModel.swift in Sources */,
 				596E46B622A2C58A00DD08FA /* AppDelegate.swift in Sources */,
