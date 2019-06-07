@@ -29,13 +29,13 @@ class ViewController: UIViewController {
     }
     
     func startGame() {
-        
+        print(BoardModel.shareInstance.gameState)
         // Restart game
-        if board.gameState != .playing {
+//        if board.gameState != .playing {
             //MARK: Create board
             board.resetBoardProperties()
             board.setupTileField()
-        }
+//        }
         
         stkBoard.setupButton()
     }

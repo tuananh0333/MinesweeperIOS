@@ -11,8 +11,6 @@ import UIKit
 
 class HomeScreenController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
     
-    
-    
     var isSound = false {
         didSet {
             if isSound {
@@ -56,11 +54,6 @@ class HomeScreenController: UIViewController, UIPickerViewDelegate, UIPickerView
         pkvDifficult.delegate = self
         pkvDifficult.isHidden = false
         // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    @IBAction func btnNewGame(_ sender: UIButton) {
-    }
-    @IBAction func btnScore(_ sender: UIButton) {
     }
     @IBAction func btnSound(_ sender: UIButton) {
         isSound = !isSound

@@ -17,18 +17,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Oao-ZW-8Bs">
-                                <rect key="frame" x="177" y="300" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unflaggedbomb" translatesAutoresizingMaskIntoConstraints="NO" id="aNc-rc-Htu">
+                                <rect key="frame" x="139.5" y="285.5" width="96" height="96"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="96" id="KaO-yk-8n3"/>
+                                    <constraint firstAttribute="width" constant="96" id="xsh-cO-by8"/>
+                                </constraints>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Oao-ZW-8Bs">
+                                <rect key="frame" x="162.5" y="426.5" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="5PW-v4-mHO"/>
+                                    <constraint firstAttribute="height" constant="50" id="pBY-U2-uNC"/>
+                                </constraints>
+                                <color key="color" red="0.6095336294" green="0.0" blue="0.0057063048339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.50158128059654772" green="0.88383583830349954" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="aNc-rc-Htu" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="cEx-Ll-q2Q"/>
+                            <constraint firstItem="Oao-ZW-8Bs" firstAttribute="top" secondItem="aNc-rc-Htu" secondAttribute="bottom" constant="45" id="elR-KZ-Q7D"/>
+                            <constraint firstItem="aNc-rc-Htu" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="uZX-Or-dzq"/>
+                            <constraint firstItem="Oao-ZW-8Bs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="znw-A8-Lc0"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="unflaggedbomb" width="256" height="256"/>
+    </resources>
 </document>
