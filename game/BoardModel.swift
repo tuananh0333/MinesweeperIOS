@@ -49,7 +49,12 @@ class BoardModel {
         get { return _cols }
     }
     
-    private var _difficult: Difficult = .easy
+    private var _difficult: Difficult = .easy {
+        didSet {
+            resetBoardProperties()
+            setupTileField()
+        }
+    }
     var difficult: Difficult {
         set { _difficult = newValue }
         get { return _difficult }
@@ -130,7 +135,6 @@ class BoardModel {
             _maxMines = _rows * cols * (50 / 100)
         }
         
-        _maxMines = 0
         _openedTiles = 0
         _flaggedMine = 0
         
