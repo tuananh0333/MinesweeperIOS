@@ -16,14 +16,23 @@ class Tile {
         case exploded
     }
 
-    private var _imageName: [State: String] = [.hide: "hidden", .opened: "opened", .flagged: "flagged", .marked: "marked", .exploded: "exploded"]
+    private var imageDictionary: [State: String] = [.hide: "hidden", .opened: "opened", .flagged: "flagged", .marked: "marked", .exploded: "exploded"]
     
     private var _y: Int
     private var _x: Int
     
     private var _mineCounter: Int
-    private var _state: State
+    private var _state: State {
+        didSet {
+            _imageName = imageDictionary[_state]!
+            if _state == .opened {
+                _imageName.append("\(_mineCounter)")
+            }
+        }
+    }
+    
     private var _isMine: Bool
+    private var _imageName: String
     
     init(_ x: Int, _ y: Int) {
         self._y = y
@@ -32,6 +41,7 @@ class Tile {
         self._mineCounter = 0
         self._isMine = false
         self._state = .hide
+        _imageName = imageDictionary[_state]!
     }
     
     init() {
@@ -41,6 +51,7 @@ class Tile {
         self._mineCounter = 0
         self._isMine = false
         self._state = .hide
+        _imageName = imageDictionary[_state]!
     }
     
     var x: Int {
@@ -102,20 +113,7 @@ class Tile {
     }
     
     var imageName: String? {
-        get {
-            if var imageName = _imageName[_state] {
-                if _state == .opened {
-                    imageName.append("\(_mineCounter)")
-                }
-                
-//                print("Image name: ", imageName)
-                
-                return imageName
-            }
-            else {
-                return nil
-            }
-        }
+        get { return _imageName }
     }
     
     // Need a Postition class for better using

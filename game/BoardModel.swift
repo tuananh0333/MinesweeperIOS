@@ -235,7 +235,9 @@ class BoardModel {
         
         for (rowOffset, colOffset) in _nearbyTileOffset {
             if let nearbyTile = getTileAt(of.tileModel.x + rowOffset, of.tileModel.y + colOffset) {
-                nearbyTiles.append(nearbyTile)
+                if (nearbyTile.isEnabled) {
+                    nearbyTiles.append(nearbyTile)
+                }
             }
         }
         
@@ -315,7 +317,7 @@ class BoardModel {
                 
                 for nearbyTile in nearbyTiles {
                     // Countinue expand if nearby tile is touchable and has no mine around it
-                    if nearbyTile.tileModel.mineCounter == 0 && nearbyTile.isEnabled {
+                    if nearbyTile.tileModel.mineCounter == 0 {
                         nearbyTile.openTile()
                         touch(nearbyTile)
                     }
