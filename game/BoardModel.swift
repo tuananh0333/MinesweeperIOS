@@ -234,7 +234,6 @@ class BoardModel {
             
             // Increase score
             _openedTiles += 1
-            print(score)
             
         case .exploded:
             gameOver()
