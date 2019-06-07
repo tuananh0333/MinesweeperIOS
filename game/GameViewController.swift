@@ -29,8 +29,6 @@ class ViewController: UIViewController {
     }
     
     func startGame() {
-
-        board.difficult = .easy
         
         // Restart game
         if board.gameState != .playing {
