@@ -134,15 +134,15 @@ class BoardModel {
         case .easy:
             _rows = 8
             _cols = 4
-            _maxMines = 1
+            _maxMines = _rows * _cols * 1 / 10
         case .normal:
             _rows = 16
             _cols = 8
-            _maxMines = _rows * _cols * 4 / 10
+            _maxMines = _rows * _cols * 2 / 10
         case .hard:
             _rows = 32
             _cols = 16
-            _maxMines = _rows * _cols * 5 / 10
+            _maxMines = _rows * _cols * 3 / 10
         }
         
         gameState = .playing
