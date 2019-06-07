@@ -66,6 +66,11 @@ class BoardModel {
         get { return _minesAmount }
     }
     
+    var openedTiles: Int {
+        get { return _openedTiles }
+        set { _openedTiles = newValue }
+    }
+    
     //MARK: Score delegate
     private var _score = 0 {
         didSet {
@@ -129,7 +134,7 @@ class BoardModel {
         case .easy:
             _rows = 8
             _cols = 4
-            _maxMines = _rows * _cols * 2 / 10
+            _maxMines = 1
         case .normal:
             _rows = 16
             _cols = 8
@@ -140,6 +145,7 @@ class BoardModel {
             _maxMines = _rows * _cols * 5 / 10
         }
         
+        gameState = .playing
         _minesAmount = 0
         _openedTiles = 0
         _flaggedMine = 0
@@ -268,10 +274,6 @@ class BoardModel {
              if current tile is hidden -> flagged -> marked -> hidden
     */
     func touch(_ tile: TileControl) {
-        if isWin() {
-            win()
-        }
-        
         switch _touchMode {
         case .flag:
             // Check if reach maximum flag and mark
@@ -281,7 +283,6 @@ class BoardModel {
             }
             
             tile.flagTile()
-            
             
             if tile.tileModel.state == .flagged {
                 _flaggedTiles += 1
@@ -305,15 +306,12 @@ class BoardModel {
             if tile.tileModel.state == .exploded {
                 gameOver()
             } else {
-                _openedTiles += 1
-                
                 // Expand if no mine around
                 if tile.tileModel.mineCounter > 0 {
                     return
                 }
                 
                 let nearbyTiles = getNearbyTiles(of: tile)
-                
                 
                 for nearbyTile in nearbyTiles {
                     // Countinue expand if nearby tile is touchable and has no mine around it
@@ -327,24 +325,31 @@ class BoardModel {
                 }
             }
         }
+        if isWin(){
+            win()
+        }
     }
     
     // Win if flagged tiles > 0 (aka: User doesn't mass flag every tile on the board) and:
     // - User open every "not mine" tiles
     // Or: - user flagged every mine tiles
     func isWin() -> Bool{
-        if (_flaggedTiles > 0) {
-            // If all "not mine" tile is opened
-            if _rows * _cols - _openedTiles == _minesAmount {
-                return true
-            }
-            
+        var flag = false
+        if _rows * _cols - _openedTiles == _minesAmount {
+            flag = true
+        }
+        else if (_flaggedTiles > 0) {
             // If all mine tile is flagged
             if _flaggedMine == _minesAmount {
-                return true
+                for tile in _mineTilesList {
+                    if tile.tileModel.state != .flagged {
+                        flag = false
+                    }
+                }
+                flag = true
             }
         }
-        return false
+        return flag
     }
     
     func win() {
