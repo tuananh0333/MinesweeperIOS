@@ -57,12 +57,6 @@ class BoardModel {
         get { return _cols }
     }
     
-    private var _difficult: Difficult = .easy {
-        didSet {
-            resetBoardProperties()
-            setupTileField()
-        }
-    }
     var difficult: Difficult {
         set { _difficult = newValue }
         get { return _difficult }
