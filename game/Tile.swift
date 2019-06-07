@@ -77,17 +77,7 @@ class Tile {
         get { return _isMine }
     }
     
-    
-    func touch(touchMode: BoardModel.TouchMode) {
-        switch touchMode {
-        case .flag:
-            flagTile()
-        case .normal:
-            openTile()
-        }
-    }
-    
-    private func openTile() {
+    func openTile() {
         if _state == .hide {
             if (_isMine) {
                 _state = .exploded
@@ -98,7 +88,7 @@ class Tile {
         }
     }
     
-    private func flagTile() {
+    func flagTile() {
         switch _state {
         case .hide:
             _state = .flagged
@@ -117,6 +107,9 @@ class Tile {
                 if _state == .opened {
                     imageName.append("\(_mineCounter)")
                 }
+                
+//                print("Image name: ", imageName)
+                
                 return imageName
             }
             else {

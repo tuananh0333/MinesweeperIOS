@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0F789429588FD2778896E620341F8212F2C0AA36",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "0F789429588FD2778896E620341F8212F2C0AA36" : 9223372036854775807,
+    "04101981B66E318109934C9516F88D824BB96459" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2AA0D432-CA92-4CD6-970A-C1F05F3EEB31",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "0F789429588FD2778896E620341F8212F2C0AA36" : "Mine\/",
+    "04101981B66E318109934C9516F88D824BB96459" : "Mine\/fmdb\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "game",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "game.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ccgus\/fmdb.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "04101981B66E318109934C9516F88D824BB96459"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tuananh0333\/MinesweeperIOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0F789429588FD2778896E620341F8212F2C0AA36"
+    }
+  ]
+}
