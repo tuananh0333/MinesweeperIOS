@@ -13,10 +13,19 @@ class TileControl: UIButton {
     private var _tileSize: CGFloat = CGFloat(5)
     private var _tileModel: Tile = Tile()
     
+    var tileModel: Tile {
+        set { _tileModel = newValue }
+        get { return _tileModel }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         updateImage()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func updateImage() {
@@ -26,14 +35,13 @@ class TileControl: UIButton {
         }
         
         if let image = UIImage(named: imageName) {
-            if self._tileModel.state == .flagged || self._tileModel.state == .marked {
-                self.setBackgroundImage(UIImage(named: "hidden"), for: .normal)
-                self.setImage(image, for: .normal)
-            }
-            else {
-                self.setBackgroundImage(image, for: .normal)
-                self.setImage(UIImage(named: "emptyImage"), for: .normal)
-            }
+//            if self._tileModel.state == .flagged || self._tileModel.state == .marked {
+//                self.setBackgroundImage(UIImage(named: "hidden"), for: .normal)
+//            }
+//            else {
+//                self.setImage(UIImage(named: "emptyImage"), for: .normal)
+//            }
+            self.setBackgroundImage(image, for: .normal)
         }
         else {
             print("Image is not found")
@@ -41,39 +49,21 @@ class TileControl: UIButton {
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func getTileModel() -> Tile {
-        return self._tileModel
-    }
-    
-    func setTileModel(_ tileModel: Tile) {
-        self._tileModel = tileModel
-    }
-    
-    func touchTile(touchMode: BoardModel.TouchMode) {
-        _tileModel.touch(touchMode: touchMode)
-
+    func flagTile() {
+        _tileModel.flagTile()
         updateImage()
+    }
+    
+    // Return false if open a mine tile
+    func openTile() {
+        _tileModel.openTile()
         
-        
-        if _tileModel.state == .opened && self.isEnabled == true {
+        if isEnabled {
             BoardModel.shareInstance.score += _tileModel.mineCounter * 2
             isEnabled = false
         }
-    }
-
-    // Tile button is touchable if:
-    // - game is not win or over
-    // - state of tile is hide (or untouched)
-    func isTouchable() -> Bool {
-        if _tileModel.state == .hide {
-            return true
-        }
         
-        return false
+        updateImage()
     }
     
     func setMine(chance: Float) {
@@ -87,6 +77,13 @@ class TileControl: UIButton {
             updateImage()
             print("Mine: ", _tileModel.pos)
         }
+    }
+    
+    func setMine() {
+        _tileModel.isMine = true
+        _tileModel.state = .hide
+        updateImage()
+        print("Mine: ", _tileModel.pos)
     }
     
     func end() {
@@ -112,6 +109,12 @@ class TileControl: UIButton {
         else {
             print("Image is not found")
             return
+        }
+    }
+    
+    func increaseAffectedTilesMineCounter(tilesList: inout [TileControl]) {
+        for tile in tilesList {
+            tile.tileModel.increaseMineCounter(by: 1)
         }
     }
 }

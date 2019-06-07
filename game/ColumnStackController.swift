@@ -10,38 +10,31 @@ import UIKit
 
 class ColumnStackController: UIStackView {
     //MARK: Properties
-    private var rowList = [RowStackController]()
+    private var rowList = [RowStackController]() //Array(repeating: RowStackController, count: board.rows)
 
     private let board: BoardModel = BoardModel.shareInstance
-    private var rows: Int = 16
-    private var cols: Int = 8
     
     //MARK: Constructor
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        setupButton()
     }
     
     required init(coder: NSCoder) {
         super.init(coder: coder)
-    }
-    
-    func setBoardSize(rows: Int, cols: Int) {
-        self.rows = rows
-        self.cols = cols
         
-        board.setBoardSize(rows: rows, cols: cols)
-        
-        setupButton() 
+        setupButton()
     }
     
     func setupButton() {
         resetRowList()
         
-        for y in 0 ..< rows {
+        for y in 0 ..< board.rows {
             //MARK: Create new row stack
             let stkRow = RowStackController()
 
-            for x in 0 ..< cols {
+            for x in 0 ..< board.cols {
                 //MARK: Create new button at x, y
                 if let btnTile = board.getTileAt(x, y) {
                     

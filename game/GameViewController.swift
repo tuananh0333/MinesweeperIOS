@@ -17,8 +17,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var lblScore: UILabel!
     @IBOutlet weak var btnFlagOutlet: UIButton!
     
-    
-    
     var board: BoardModel = BoardModel.shareInstance
     
     override func viewDidLoad() {
@@ -27,20 +25,20 @@ class ViewController: UIViewController {
         callback()
         
         //MARK: Create board
-        stkBoard.setBoardSize(rows: 16, cols: 8)
+//        stkBoard.setBoardSize(rows: board.rows, cols: board.cols)
     }
     
     func callback() {
-        BoardModel.shareInstance.scoreUpdate = {
+        board.scoreUpdate = {
             [weak self] (score: Int) in self?.updateScore(score)
         }
         
-        BoardModel.shareInstance.flaggedTilesChanged = {
+        board.flaggedTilesChanged = {
             [weak self] (tilesCount: Int) in self?.flagTilesChanged(tilesCount)
         }
         
-        BoardModel.shareInstance.isOver = {
-            [weak self] (state: BoardModel.GameState) in self?.gamestateChanged(state)
+        board.isOver = {
+            [weak self] (state: BoardModel.GameState) in self?.gameStateChanged(state)
         }
     }
 
@@ -58,7 +56,7 @@ class ViewController: UIViewController {
         print("Flag number: ", board.mineAmount - tilesCount)
     }
     
-    func gamestateChanged(_ state: BoardModel.GameState) {
+    func gameStateChanged(_ state: BoardModel.GameState) {
         switch state {
         case .over:
             showGameOverDialog()
@@ -75,8 +73,6 @@ class ViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        
-        
     }
     
     @IBAction func btnBackToHome(_ sender: UIButton) {
