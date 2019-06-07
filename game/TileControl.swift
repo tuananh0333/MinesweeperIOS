@@ -35,12 +35,6 @@ class TileControl: UIButton {
         }
         
         if let image = UIImage(named: imageName) {
-//            if self._tileModel.state == .flagged || self._tileModel.state == .marked {
-//                self.setBackgroundImage(UIImage(named: "hidden"), for: .normal)
-//            }
-//            else {
-//                self.setImage(UIImage(named: "emptyImage"), for: .normal)
-//            }
             self.setBackgroundImage(image, for: .normal)
         }
         else {
@@ -58,6 +52,11 @@ class TileControl: UIButton {
     func openTile() {
         _tileModel.openTile()
         
+        if (_tileModel.isMine) {
+            updateImage()
+            return
+        }
+        
         if isEnabled {
             BoardModel.shareInstance.score += _tileModel.mineCounter * 2
             isEnabled = false
@@ -73,7 +72,7 @@ class TileControl: UIButton {
         
         if arc4random_uniform(UInt32(chance)) == 0 {
             _tileModel.isMine = true
-            _tileModel.state = .hide
+            _tileModel.state = .marked
             updateImage()
             print("Mine: ", _tileModel.pos)
         }
