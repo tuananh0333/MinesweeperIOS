@@ -23,6 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         callback()
+        print(BoardModel.shareInstance.gameState)
         
         //MARK: Create board
         board.setupTileField()
