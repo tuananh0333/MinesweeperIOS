@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 class BoardModel {
     enum TouchMode {
         case flag
@@ -79,7 +80,7 @@ class BoardModel {
         }
     }
     var flaggedTiles: Int {
-        get { return _flaggedTiles }
+        get { return _minesAmount - _flaggedTiles }
     }
     var flaggedTilesChanged: ((_ tilesCount: Int) -> Void)?
     
@@ -145,7 +146,7 @@ class BoardModel {
             for x in 0 ..< _cols {
                 for y in 0 ..< _rows {
                     let selectedTile = _tilesList[x][y]
-                    selectedTile.setMine(chance: 5)
+                    selectedTile.setMine(chance: 20)
                     if selectedTile.getTileModel().isMine {
                         _minesAmount += 1
                     }
