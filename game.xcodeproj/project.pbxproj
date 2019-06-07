@@ -25,6 +25,8 @@
 		596E46CB22A2C58A00DD08FA /* gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E46CA22A2C58A00DD08FA /* gameTests.swift */; };
 		59B9DD2622A7A7B6000EF01D /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B9DD2522A7A7B6000EF01D /* AlertController.swift */; };
 		59E2FF8F22AA22A700C3EC1C /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E2FF8E22AA22A700C3EC1C /* ScoreTableViewCell.swift */; };
+		9F5E355722AA36080087F5E3 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5E355622AA36080087F5E3 /* libsqlite3.0.tbd */; };
+		9F5E355922AA361B0087F5E3 /* fmdb in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5E355822AA361B0087F5E3 /* fmdb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		596E46CC22A2C58B00DD08FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59B9DD2522A7A7B6000EF01D /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		59E2FF8E22AA22A700C3EC1C /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
+		9F5E355622AA36080087F5E3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		9F5E355822AA361B0087F5E3 /* fmdb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fmdb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F5E355922AA361B0087F5E3 /* fmdb in Frameworks */,
+				9F5E355722AA36080087F5E3 /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +92,7 @@
 				596E46B422A2C58A00DD08FA /* game */,
 				596E46C922A2C58A00DD08FA /* gameTests */,
 				596E46B322A2C58A00DD08FA /* Products */,
+				9F5E355522AA36070087F5E3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +137,15 @@
 				596E46CC22A2C58B00DD08FA /* Info.plist */,
 			);
 			path = gameTests;
+			sourceTree = "<group>";
+		};
+		9F5E355522AA36070087F5E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F5E355822AA361B0087F5E3 /* fmdb */,
+				9F5E355622AA36080087F5E3 /* libsqlite3.0.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
