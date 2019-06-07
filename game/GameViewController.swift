@@ -24,12 +24,16 @@ class ViewController: UIViewController {
         
         callback()
         
+        board.difficult = .easy
+        
         // Restart game
         if board.gameState != .playing {
             //MARK: Create board
             board.resetBoardProperties()
             board.setupTileField()
         }
+        
+        stkBoard.setupButton()
     }
     
     func callback() {

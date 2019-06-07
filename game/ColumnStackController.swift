@@ -10,7 +10,7 @@ import UIKit
 
 class ColumnStackController: UIStackView {
     //MARK: Properties
-    private var rowList = [RowStackController]() //Array(repeating: RowStackController, count: board.rows)
+    private var rowList = [RowStackController]()
 
     private let board: BoardModel = BoardModel.shareInstance
     
