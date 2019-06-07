@@ -11,6 +11,7 @@ import UIKit
 class ScoreTableViewController: UITableViewController {
     
     public static var scoreList = [Int]()
+    var date = Date()
 
     @IBAction func btnBack(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -20,7 +21,7 @@ class ScoreTableViewController: UITableViewController {
         super.viewDidLoad()
         
         ScoreTableViewController.scoreList = [10, 20, 20, 10, 40, 100]
-        print(ScoreTableViewController.scoreList)
+        ScoreTableViewController.scoreList.sort()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -48,12 +49,12 @@ class ScoreTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "score", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "score", for: indexPath) as? ScoreTableViewCell else {
+            fatalError("can not get score")
+        }
         
-        let lable = UILabel()
-        lable.text = String(ScoreTableViewController.scoreList[indexPath.row])
-        lable.textColor = UIColor.black
-        cell.addSubview(lable)
+        cell.lblDate.text = date.description
+        cell.lblScore.text = String(ScoreTableViewController.scoreList[(ScoreTableViewController.scoreList.count - 1) - indexPath.row])
         
         return cell
     }

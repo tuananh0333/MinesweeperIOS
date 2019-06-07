@@ -59,15 +59,17 @@ class ViewController: UIViewController {
     func gameStateChanged(_ state: BoardModel.GameState) {
         switch state {
         case .over:
-            showGameOverDialog()
+            showDialog(title: "game over", message: "Back to home?")
+        case .win:
+            showDialog(title: "You won!", message: "Back to home?")
         default:
             //TODO: Reaction for other state
             break
         }
     }
     
-    private func showGameOverDialog() {
-        let alert = UIAlertController(title: "Game Over", message: "Back to home?", preferredStyle: .alert)
+    private func showDialog(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             self.dismiss(animated: true, completion: nil)
         }))
@@ -76,12 +78,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func btnBackToHome(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Back to home", message: "Back to home will stop your current game", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            self.dismiss(animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        showDialog(title: "Back to home", message: "Back to home will stop your current game")
     }
 
     @IBAction func btnFlag(_ sender: UIButton) {
