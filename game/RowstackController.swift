@@ -1,6 +1,6 @@
 //
-//  RatingController.swift
-//  FoodManagement
+//  RowStackController.swift
+//  Minesweeper
 //
 //  Created by le tuan anh on 5/11/19.
 //  Copyright © 2019 CNTT-TDC. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable class RowStackController: UIStackView {
+class RowStackController: UIStackView {
     //MARK: Properties
     private var tilesList = [TileControl]()
     

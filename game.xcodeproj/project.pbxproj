@@ -23,7 +23,6 @@
 		596E46BD22A2C58A00DD08FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596E46BC22A2C58A00DD08FA /* Assets.xcassets */; };
 		596E46C022A2C58A00DD08FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596E46BE22A2C58A00DD08FA /* LaunchScreen.storyboard */; };
 		596E46CB22A2C58A00DD08FA /* gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596E46CA22A2C58A00DD08FA /* gameTests.swift */; };
-		59B9DD2622A7A7B6000EF01D /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B9DD2522A7A7B6000EF01D /* AlertController.swift */; };
 		59E2FF8F22AA22A700C3EC1C /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E2FF8E22AA22A700C3EC1C /* ScoreTableViewCell.swift */; };
 		9F5E355722AA36080087F5E3 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5E355622AA36080087F5E3 /* libsqlite3.0.tbd */; };
 		9F5E355922AA361B0087F5E3 /* fmdb in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5E355822AA361B0087F5E3 /* fmdb */; };
@@ -60,7 +59,6 @@
 		596E46C622A2C58A00DD08FA /* gameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		596E46CA22A2C58A00DD08FA /* gameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameTests.swift; sourceTree = "<group>"; };
 		596E46CC22A2C58B00DD08FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59B9DD2522A7A7B6000EF01D /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		59E2FF8E22AA22A700C3EC1C /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
 		9F5E355622AA36080087F5E3 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		9F5E355822AA361B0087F5E3 /* fmdb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fmdb; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 				596E46BE22A2C58A00DD08FA /* LaunchScreen.storyboard */,
 				596E46C122A2C58A00DD08FA /* Info.plist */,
 				59174F0F22A7644B00F9B429 /* ScoreTableViewController.swift */,
-				59B9DD2522A7A7B6000EF01D /* AlertController.swift */,
 				5954B97222A95BEA003D966E /* AboutUsViewController.swift */,
 				5954B97622A96405003D966E /* HowToPlayViewController.swift */,
 				59E2FF8E22AA22A700C3EC1C /* ScoreTableViewCell.swift */,
@@ -261,7 +258,6 @@
 				591E2CE022A385FD00B364F3 /* HomeScreenController.swift in Sources */,
 				59010C3222A56E6A00D34B69 /* BoardModel.swift in Sources */,
 				596E46B622A2C58A00DD08FA /* AppDelegate.swift in Sources */,
-				59B9DD2622A7A7B6000EF01D /* AlertController.swift in Sources */,
 				59174F1022A7644B00F9B429 /* ScoreTableViewController.swift in Sources */,
 				591E2CE422A3A24600B364F3 /* ColumnStackController.swift in Sources */,
 				5954B97722A96405003D966E /* HowToPlayViewController.swift in Sources */,

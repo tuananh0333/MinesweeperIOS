@@ -16,6 +16,7 @@ class BoardModel {
         case easy
         case normal
         case hard
+        case demo
     }
     enum GameState {
         case win
@@ -31,12 +32,7 @@ class BoardModel {
     private var _openedTiles = 0
     private var _flaggedMine = 0
     private var _minesAmount = 0
-    private var _difficult: Difficult = .easy {
-        didSet {
-            resetBoardProperties()
-            setupTileField()
-        }
-    }
+    private var _difficult: Difficult = .easy
     
     private var _mineTilesList: [TileControl] = []
     private var _tilesList: [[TileControl]] = []
@@ -135,7 +131,7 @@ class BoardModel {
         case .easy:
             _rows = 8
             _cols = 4
-            _maxMines = _rows * _cols * 1 / 10
+            _maxMines = _rows * _cols * 3 / 10
         case .normal:
             _rows = 16
             _cols = 8
@@ -143,14 +139,26 @@ class BoardModel {
         case .hard:
             _rows = 32
             _cols = 16
-            _maxMines = _rows * _cols * 3 / 10
+            _maxMines = _rows * _cols * 2 / 10
+        case .demo:
+            _rows = 16
+            _cols = 8
+            _maxMines = 9
         }
         
         _openedTiles = 0
         _flaggedMine = 0
+        _flaggedTiles = 0
         
-        _mineTilesList = []
-        _tilesList = []
+        score = 0
+        
+        _minesAmount = 0
+        
+        _mineTilesList.removeAll()
+        _tilesList.removeAll()
+        
+        gameState = .playing
+//        flaggedTilesChanged?(_flaggedTiles)
         
         print("Max mine", _maxMines)
     }
@@ -166,6 +174,7 @@ class BoardModel {
                 countMinesAround(tile: mineTile)
             }
         }
+        flaggedTilesChanged?(_flaggedTiles)
     }
     
     private func resetTilesList() {
@@ -336,17 +345,6 @@ class BoardModel {
         var flag = false
         if _rows * _cols - _openedTiles == _minesAmount {
             flag = true
-        }
-        else if (_flaggedTiles > 0) {
-            // If all mine tile is flagged
-            if _flaggedMine == _minesAmount {
-                for tile in _mineTilesList {
-                    if tile.tileModel.state != .flagged {
-                        flag = false
-                    }
-                }
-                flag = true
-            }
         }
         return flag
     }

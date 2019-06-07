@@ -1,6 +1,6 @@
 //
 //  ScoreTableViewController.swift
-//  game
+//  Minesweeper
 //
 //  Created by le tuan anh on 6/5/19.
 //  Copyright © 2019 CNTT-TDC. All rights reserved.
@@ -20,14 +20,9 @@ class ScoreTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //On being developed function, data just created to present as an example
         ScoreTableViewController.scoreList = [10, 20, 20, 10, 40, 100]
         ScoreTableViewController.scoreList.sort()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,9 +47,14 @@ class ScoreTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "score", for: indexPath) as? ScoreTableViewCell else {
             fatalError("can not get score")
         }
+        if(indexPath.row == ScoreTableViewController.scoreList.count - 1 ) {
+            cell.lblDate.text = "On being developed function, data just created to present as an example"
+            cell.lblScore.text = ""
+        } else {
         
         cell.lblDate.text = "07/06/2019"
         cell.lblScore.text = String(ScoreTableViewController.scoreList[(ScoreTableViewController.scoreList.count - 1) - indexPath.row])
+        }
         
         return cell
     }

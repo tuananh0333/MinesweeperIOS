@@ -1,6 +1,6 @@
 //
 //  HomeScreenController.swift
-//  game
+//  Minesweeper
 //
 //  Created by le tuan anh on 6/2/19.
 //  Copyright © 2019 CNTT-TDC. All rights reserved.
@@ -24,7 +24,7 @@ class HomeScreenController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var pkvDifficult: UIPickerView!
     @IBOutlet weak var btnSound: UIButton!
     
-    let gradePickerValues = ["Easy", "Medium", "Hard"]
+    let gradePickerValues = ["Easy", "Medium", "Hard", "Demo"]
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -43,6 +43,8 @@ class HomeScreenController: UIViewController, UIPickerViewDelegate, UIPickerView
             BoardModel.shareInstance.difficult = .normal
         case 2:
             BoardModel.shareInstance.difficult = .hard
+        case 3:
+            BoardModel.shareInstance.difficult = .demo
         default:
             break
         }
@@ -53,15 +55,8 @@ class HomeScreenController: UIViewController, UIPickerViewDelegate, UIPickerView
         pkvDifficult.dataSource = self
         pkvDifficult.delegate = self
         pkvDifficult.isHidden = false
-        // Do any additional setup after loading the view, typically from a nib.
     }
     @IBAction func btnSound(_ sender: UIButton) {
         isSound = !isSound
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
+    } 
 }

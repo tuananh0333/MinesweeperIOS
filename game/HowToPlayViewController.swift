@@ -15,7 +15,7 @@ class HowToPlayViewController: UIPageViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = self as? UIPageViewControllerDataSource
+        dataSource = self
         
         if let firstViewController = orderedViewControllers.first {
             setViewControllers([firstViewController],
@@ -23,7 +23,6 @@ class HowToPlayViewController: UIPageViewController {
                                animated: true,
                                completion: nil)
         }
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

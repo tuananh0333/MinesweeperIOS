@@ -1,6 +1,6 @@
 //
 //  Tile.swift
-//  game
+//  Minesweeper
 //
 //  Created by CNTT-MAC on 6/2/19.
 //  Copyright © 2019 CNTT-TDC. All rights reserved.

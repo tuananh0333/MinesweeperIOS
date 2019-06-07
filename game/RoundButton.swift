@@ -1,6 +1,6 @@
 //
 //  RoundButton.swift
-//  game
+//  Minesweeper
 //
 //  Created by le tuan anh on 6/2/19.
 //  Copyright © 2019 CNTT-TDC. All rights reserved.

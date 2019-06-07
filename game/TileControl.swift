@@ -35,7 +35,13 @@ class TileControl: UIButton {
         }
         
         if let image = UIImage(named: imageName) {
-            self.setBackgroundImage(image, for: .normal)
+            if tileModel.state == .flagged || tileModel.state == .marked {
+                self.setBackgroundImage(UIImage(named: "hidden"), for: .normal)
+                self.setImage(image, for: .normal)
+            } else {
+                self.setBackgroundImage(image, for: .normal)
+                setImage(UIImage(named: "emptyImage"), for: .normal)
+            }
         }
         else {
             print("Image is not found")
@@ -54,6 +60,10 @@ class TileControl: UIButton {
     
     // Return false if open a mine tile
     func openTile() {
+        if tileModel.state != .hide {
+            return
+        }
+        
         _tileModel.openTile()
         
         if (_tileModel.isMine) {
@@ -113,7 +123,6 @@ class TileControl: UIButton {
         
         if let image = UIImage(named: imageName) {
             self.setBackgroundImage(image, for: .normal)
-            self.setImage(image, for: .normal)
         }
         else {
             print("Image is not found")

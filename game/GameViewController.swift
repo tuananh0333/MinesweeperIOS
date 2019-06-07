@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  game
+//  Minesweeper
 //
 //  Created by le tuan anh on 6/1/19.
 //  Copyright © 2019 CNTT-TDC. All rights reserved.
@@ -23,19 +23,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         callback()
-        print(BoardModel.shareInstance.gameState)
         
         startGame()
     }
     
     func startGame() {
-        print(BoardModel.shareInstance.gameState)
-        // Restart game
-//        if board.gameState != .playing {
-            //MARK: Create board
-            board.resetBoardProperties()
-            board.setupTileField()
-//        }
+        //MARK: Create board
+        board.resetBoardProperties()
+        board.setupTileField()
         
         stkBoard.setupButton()
     }
@@ -71,11 +66,11 @@ class ViewController: UIViewController {
     func gameStateChanged(_ state: BoardModel.GameState) {
         switch state {
         case .over:
-            showDialog(title: "game over", message: "Back to home?")
+            showDialog(title: "Game over", message: "Your score: \(String(describing: lblScore.text!)) \nBack to home?")
         case .win:
             showDialog(title: "You won!", message: "Back to home?")
         case .playing:
-            startGame()
+            break
         }
     }
     
@@ -106,14 +101,6 @@ class ViewController: UIViewController {
         }
         
         sender.setBackgroundImage(btnFlagImage, for: .normal)
-
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
