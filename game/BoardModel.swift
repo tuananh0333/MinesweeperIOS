@@ -105,11 +105,12 @@ class BoardModel {
     //MARK: Gamestate delegate
     var gameState: GameState = .playing {
         didSet {
-            isOver?(gameState)
+            gameStateChanged?(gameState)
         }
     }
-    var isOver: ((_ state: GameState) -> Void)?
+    var gameStateChanged: ((_ state: GameState) -> Void)?
     
+    //MARK: Flag tile delegate
     private var _flaggedTiles = 0 {
         didSet {
             flaggedTilesChanged?(_flaggedTiles)

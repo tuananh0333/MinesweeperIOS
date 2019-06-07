@@ -49,7 +49,7 @@ class ViewController: UIViewController {
             [weak self] (tilesCount: Int) in self?.flagTilesChanged(tilesCount)
         }
         
-        board.isOver = {
+        board.gameStateChanged = {
             [weak self] (state: BoardModel.GameState) in self?.gameStateChanged(state)
         }
     }
@@ -74,9 +74,8 @@ class ViewController: UIViewController {
             showDialog(title: "game over", message: "Back to home?")
         case .win:
             showDialog(title: "You won!", message: "Back to home?")
-        default:
-            //TODO: Reaction for other state
-            break
+        case .playing:
+            startGame()
         }
     }
     
@@ -84,7 +83,6 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             self.dismiss(animated: true, completion: nil)
-//            self.startGame()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
