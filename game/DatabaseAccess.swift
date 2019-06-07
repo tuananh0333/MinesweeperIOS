@@ -13,7 +13,7 @@ import os.log
 class DatabaseAccess {
     //MARK: Properties
     private var databasePath: String
-    private let databaseName: String = "meals.sqlite"
+    private let databaseName: String = "scores.sqlite"
     private var database: FMDatabase?
     
     //MARK: Table properties
