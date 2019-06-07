@@ -688,12 +688,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="flagged" width="256" height="256"/>
-        <image name="flagging" width="256" height="256"/>
+        <image name="flagged" width="32" height="32"/>
+        <image name="flagging" width="32" height="32"/>
         <image name="homepage" width="186" height="331"/>
         <image name="logokhoa" width="640" height="360"/>
         <image name="lose" width="186" height="331"/>
-        <image name="opened0" width="256" height="256"/>
+        <image name="opened0" width="16" height="16"/>
         <image name="opened1" width="256" height="256"/>
         <image name="opened2" width="256" height="256"/>
         <image name="opened3" width="256" height="256"/>
@@ -704,6 +704,6 @@
         <image name="opened8" width="256" height="256"/>
         <image name="score" width="256" height="256"/>
         <image name="soundoff" width="256" height="256"/>
-        <image name="unflaggedbomb" width="256" height="256"/>
+        <image name="unflaggedbomb" width="16" height="16"/>
     </resources>
 </document>

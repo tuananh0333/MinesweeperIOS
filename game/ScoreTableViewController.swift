@@ -53,7 +53,7 @@ class ScoreTableViewController: UITableViewController {
             fatalError("can not get score")
         }
         
-        cell.lblDate.text = date.description
+        cell.lblDate.text = "07/06/2019"
         cell.lblScore.text = String(ScoreTableViewController.scoreList[(ScoreTableViewController.scoreList.count - 1) - indexPath.row])
         
         return cell

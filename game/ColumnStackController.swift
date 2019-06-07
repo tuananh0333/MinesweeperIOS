@@ -58,7 +58,7 @@ class ColumnStackController: UIStackView {
             }
             
             //config width and height attributes
-            stkRow.translatesAutoresizingMaskIntoConstraints = false
+            stkRow.translatesAutoresizingMaskIntoConstraints = true
             
             //add new row to colStack
             addArrangedSubview(stkRow)
