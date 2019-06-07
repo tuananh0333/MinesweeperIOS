@@ -201,8 +201,8 @@ class BoardModel {
     // Repeat setting mine for tile until _mineAmount = _maxMine
     func generateMine(maxMine: Int) {
         repeat {
-            let x = arc4random_uniform(UInt32(_cols - 1))
-            let y = arc4random_uniform(UInt32(_rows - 1))
+            let x = arc4random_uniform(UInt32(_cols))
+            let y = arc4random_uniform(UInt32(_rows))
             if let selectedTile = getTileAt(Int(x), Int(y)) {
                 if !selectedTile.tileModel.isMine {
                     selectedTile.setMine()

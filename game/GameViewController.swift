@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         
         callback()
         
-        board.difficult = .easy
+        board.difficult = .hard
         
         // Restart game
         if board.gameState != .playing {
