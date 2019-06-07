@@ -23,10 +23,12 @@ class BoardModel {
         case over
     }
     
+    
     //MARK: Fields
     private var _rows: Int = 16
     private var _cols: Int = 8
     private var _maxMines = 0
+    private var _chance = 0
     private var _openedTiles = 0
     private var _flaggedMine = 0
     
@@ -47,10 +49,10 @@ class BoardModel {
         get { return _cols }
     }
     
-    var difficult: Difficult = .easy {
-        didSet {
-            
-        }
+    private var _difficult: Difficult = .easy
+    var difficult: Difficult {
+        set { _difficult = newValue }
+        get { return _difficult }
     }
     
     private var _minesAmount = 0
@@ -102,10 +104,8 @@ class BoardModel {
     var flaggedTilesChanged: ((_ tilesCount: Int) -> Void)?
     
     
-    
     static let shareInstance = BoardModel()
     
-    var difficultMaxMine: [Difficult: Int] = [.easy: 10, .normal: 8, .hard: 5]
     private var _nearbyTileOffset: [(Int, Int)] = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
     
     init() {
@@ -113,32 +113,36 @@ class BoardModel {
         setupTileField()
     }
     
-    func setBoardSize(rows: Int = 16, cols: Int = 8) {
-        self._rows = rows
-        self._cols = cols
-
-        resetBoardProperties()
-        setupTileField()
-    }
-    
     func resetBoardProperties() {
+        print("Difficult: ", _difficult)
+        switch _difficult {
+        case .easy:
+            _rows = 8
+            _cols = 4
+            _maxMines = _rows * cols * (12 / 100)
+        case .normal:
+            _rows = 16
+            _cols = 8
+            _maxMines = _rows * cols * (25 / 100)
+        case .hard:
+            _rows = 32
+            _cols = 16
+            _maxMines = _rows * cols * (50 / 100)
+        }
+        
         _maxMines = 0
-        _minesAmount = 0
-        gameState = .playing
-        _touchMode = .normal
-        _score = 0
+        _openedTiles = 0
+        _flaggedMine = 0
+        
+        _mineTilesList = []
+        _tilesList = []
     }
     
     //MARK: Prepare data
     func setupTileField() {
         resetTilesList()
         
-        if _maxMines == 0 {
-            generateMine(chance: 10)
-        }
-        else {
-            generateMine(maxMine: _maxMines)
-        }
+        generateMine(maxMine: _maxMines)
         
         if _mineTilesList.count > 0 {
             for mineTile in _mineTilesList {
@@ -148,7 +152,6 @@ class BoardModel {
     }
     
     private func resetTilesList() {
-        _tilesList = []
         for x in 0 ..< _cols {
             _tilesList.append([])
             
@@ -183,6 +186,7 @@ class BoardModel {
         print("Mines amount: ", _minesAmount)
     }
     
+    // Repeat setting mine for tile until _mineAmount = _maxMine
     func generateMine(maxMine: Int) {
         repeat {
             let x = arc4random_uniform(UInt32(_cols - 1))
