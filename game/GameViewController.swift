@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         callback()
         
         //MARK: Create board
-//        stkBoard.setBoardSize(rows: board.rows, cols: board.cols)
+        board.setupTileField()
     }
     
     func callback() {
