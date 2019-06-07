@@ -25,8 +25,12 @@ class ViewController: UIViewController {
         callback()
         print(BoardModel.shareInstance.gameState)
         
-        //MARK: Create board
-        board.setupTileField()
+        // Restart game
+        if board.gameState != .playing {
+            //MARK: Create board
+            board.resetBoardProperties()
+            board.setupTileField()
+        }
     }
     
     func callback() {
