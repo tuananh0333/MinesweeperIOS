@@ -46,12 +46,14 @@ class ViewController: UIViewController {
         if lblScore != nil {
             lblScore.text = String(score)
         }
+        print("Score: ", score)
     }
     
     func flagTilesChanged(_ tilesCount: Int) {
         if lblBombNumber != nil {
-            lblBombNumber.text = String(tilesCount)
+            lblBombNumber.text = String(board.mineAmount - tilesCount)
         }
+        print("Flag number: ", board.mineAmount - tilesCount)
     }
     
     func gamestateChanged(_ state: BoardModel.GameState) {

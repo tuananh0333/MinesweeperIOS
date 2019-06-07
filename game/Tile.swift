@@ -24,7 +24,6 @@ class Tile {
     private var _mineCounter: Int
     private var _state: State
     private var _isMine: Bool
-    var isOpened: Bool
     
     init(_ x: Int, _ y: Int) {
         self._y = y
@@ -32,7 +31,6 @@ class Tile {
         
         self._mineCounter = 0
         self._isMine = false
-        self.isOpened = false
         self._state = .hide
     }
     
@@ -42,7 +40,6 @@ class Tile {
         
         self._mineCounter = 0
         self._isMine = false
-        self.isOpened = false
         self._state = .hide
     }
     

@@ -27,7 +27,6 @@ class BoardModel {
     //MARK: Fields
     private var _rows: Int = 16
     private var _cols: Int = 8
-    private var _minesAmount = 0
     private var _maxMines = 0
     private var _openedTiles = 0
     private var _flaggedMine = 0
@@ -36,6 +35,11 @@ class BoardModel {
         didSet {
             
         }
+    }
+    
+    private var _minesAmount = 0
+    var mineAmount: Int {
+        get { return _minesAmount }
     }
     
     private var _score = 0 {
@@ -190,8 +194,14 @@ class BoardModel {
         let xRange = 0 ..< _cols
         let yRange = 0 ..< _rows
         
-        if xRange.contains(x) && yRange.contains(y) {
-            return _tilesList[x][y]
+        if xRange.contains(x) && yRange.contains(y){
+            let selectedTile = _tilesList[x][y]
+            if !selectedTile.isEnabled || selectedTile.getTileModel().state == .opened {
+                return nil
+            }
+            else {
+                return selectedTile
+            }
         }
         
         return nil
@@ -228,7 +238,6 @@ class BoardModel {
             
             // Increase score
             _openedTiles += 1
-            print(score)
             
         case .exploded:
             gameOver()
