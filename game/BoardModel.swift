@@ -121,7 +121,7 @@ class BoardModel {
         setupTileField()
     }
     
-    private func resetBoardProperties() {
+    func resetBoardProperties() {
         _maxMines = 0
         _minesAmount = 0
         gameState = .playing
