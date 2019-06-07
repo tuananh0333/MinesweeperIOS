@@ -25,6 +25,11 @@ class ViewController: UIViewController {
         callback()
         print(BoardModel.shareInstance.gameState)
         
+        startGame()
+    }
+    
+    func startGame() {
+
         board.difficult = .easy
         
         // Restart game
@@ -81,8 +86,9 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             self.dismiss(animated: true, completion: nil)
+//            self.startGame()
         }))
-        alert.addAction(UIAlertAction(title: "Cancle", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

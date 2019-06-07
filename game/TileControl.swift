@@ -46,6 +46,10 @@ class TileControl: UIButton {
     func flagTile() {
         _tileModel.flagTile()
         updateImage()
+        
+        if BoardModel.shareInstance.isWin() {
+            BoardModel.shareInstance.win()
+        }
     }
     
     // Return false if open a mine tile
@@ -59,10 +63,16 @@ class TileControl: UIButton {
         
         if isEnabled {
             BoardModel.shareInstance.score += _tileModel.mineCounter * 2
+            BoardModel.shareInstance.openedTiles += 1
             isEnabled = false
         }
         
         updateImage()
+        
+        if BoardModel.shareInstance.isWin() {
+            BoardModel.shareInstance.win()
+        }
+        
     }
     
     func setMine(chance: Float) {
